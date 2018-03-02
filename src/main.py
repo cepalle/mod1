@@ -1,3 +1,0 @@
-import vpython
-
-vpython.sphere()
