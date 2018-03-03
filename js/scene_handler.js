@@ -1,37 +1,20 @@
-const scene_sqaure = 32;
+const scene_sqaure = 16;
 
-const cube_geometry = new THREE.BoxGeometry(1, 100, 1);
 const materialVert = new THREE.MeshLambertMaterial({
-  color: 0x00ff00
+  color: 0x00ff00,
+  side: THREE.DoubleSide,
 });
-const materialBleau = new THREE.MeshLambertMaterial({
-  color: 0x0000ff
+const materialBleau = new THREE.MeshBasicMaterial({
+  color: 0x0000ff,
+  side: THREE.DoubleSide,
 });
 
 let U = [];
 let V = [];
 let S = [];
-let Mcube_sol = [];
-let Mcube_water = [];
+let geometry = new THREE.BufferGeometry();
 
 init();
-
-function cube_sol_create(i, j, h) {
-  let cube_sol = new THREE.Mesh(cube_geometry, materialVert);
-  cube_sol.position.x = i;
-  cube_sol.position.z = j;
-  cube_sol.position.y = h;
-  cube_sol.matrixAutoUpdate = false;
-  return cube_sol;
-}
-
-function cube_water_create(i, j, h) {
-  let cube_water = new THREE.Mesh(cube_geometry, materialBleau);
-  cube_water.position.x = i;
-  cube_water.position.z = j;
-  cube_water.position.y = h;
-  return cube_water;
-}
 
 function init() {
   for (i = 0; i < scene_sqaure; i++) {
@@ -44,34 +27,40 @@ function init() {
       U[i][j] = (i ? -99 : -93);
     }
   }
-  for (i = 0; i < scene_sqaure; i++) {
-    Mcube_sol.push([]);
-    Mcube_water.push([]);
-    for (j = 0; j < scene_sqaure; j++) {
-      Mcube_sol[i][j] = cube_sol_create(i, j, S[i][j]);
-      Mcube_water[i][j] = cube_water_create(i, j, U[i][j]);
-    }
-  }
 }
 
 function scene_init(scene) {
-  let light = new THREE.DirectionalLight(0xffffff, 1, 100);
-  scene.add(light);
+  //let light = new THREE.DirectionalLight(0xffffff, 1, 100);
+  //scene.add(light);
 
-  for (i = 0; i < scene_sqaure; i++) {
-    for (j = 0; j < scene_sqaure; j++) {
-      scene.add(Mcube_sol[i][j]);
-      Mcube_sol[i][j].updateMatrix();
-      scene.add(Mcube_water[i][j]);
-    }
-  }
+
+  // create a simple square shape. We duplicate the top left and bottom right
+  // vertices because each vertex needs to appear once per triangle.
+
+  let positions = new Float32Array([
+    0, 0, 0,
+    1, 0, 0,
+    1, 0, 1,
+
+    0, 0, 0,
+    0, 0, 1,
+    1, 0, 1,
+
+  ]);
+
+  geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.attributes.position.needsUpdate = true;
+  let mesh = new THREE.Mesh(geometry, materialBleau);
+  scene.add(mesh);
+}
+
+function positions_upadte() {
+  let positions = geometry.attributes.position.array;
+  positions[17] = 2;
 }
 
 function scene_update(scene) {
   water_update(U, V, S);
-  for (i = 0; i < scene_sqaure; i++) {
-    for (j = 0; j < scene_sqaure; j++) {
-      Mcube_water[i][j].position.y = U[i][j];
-    }
-  }
+  positions_upadte();
+  geometry.attributes.position.needsUpdate = true;
 }
