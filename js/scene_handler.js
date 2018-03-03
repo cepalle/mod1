@@ -21,6 +21,7 @@ function cube_sol_create(i, j, h) {
   cube_sol.position.x = i;
   cube_sol.position.z = j;
   cube_sol.position.y = h;
+  cube_sol.matrixAutoUpdate = false;
   return cube_sol;
 }
 
@@ -60,6 +61,7 @@ function scene_init(scene) {
   for (i = 0; i < scene_sqaure; i++) {
     for (j = 0; j < scene_sqaure; j++) {
       scene.add(Mcube_sol[i][j]);
+      Mcube_sol[i][j].updateMatrix();
       scene.add(Mcube_water[i][j]);
     }
   }
