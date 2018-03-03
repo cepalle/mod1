@@ -1,10 +1,10 @@
 const scene_sqaure = 32;
 
 const geometry = new THREE.BoxGeometry(1, 100, 1);
-const materialVert = new THREE.MeshStandardMaterial({
+const materialVert = new THREE.MeshLambertMaterial({
   color: 0x00ff00
 });
-const materialBleau = new THREE.MeshStandardMaterial({
+const materialBleau = new THREE.MeshLambertMaterial({
   color: 0x0000ff
 });
 
