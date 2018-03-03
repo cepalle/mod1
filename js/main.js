@@ -1,10 +1,13 @@
+const dim_view = 32;
+
+
 let renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 let camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 1, 500);
-camera.position.set(32, 32, 32);
-camera.lookAt(new THREE.Vector3(0, 0, 0));
+camera.position.set(dim_view * 1.5, dim_view, dim_view * 1.5);
+camera.lookAt(new THREE.Vector3(dim_view / 2, 0, dim_view / 2));
 
 let scene = new THREE.Scene();
 
