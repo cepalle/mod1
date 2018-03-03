@@ -16,19 +16,19 @@ let Mcube_water = [];
 
 init();
 
-function cube_sol_create(i, j) {
+function cube_sol_create(i, j, h) {
   let cube_sol = new THREE.Mesh(cube_geometry, materialVert);
   cube_sol.position.x = i;
   cube_sol.position.z = j;
-  cube_sol.position.y = -100;
+  cube_sol.position.y = h;
   return cube_sol;
 }
 
-function cube_water_create(i, j) {
+function cube_water_create(i, j, h) {
   let cube_water = new THREE.Mesh(cube_geometry, materialBleau);
   cube_water.position.x = i;
   cube_water.position.z = j;
-  cube_water.position.y = (i ? -99 : -93);
+  cube_water.position.y = h;
   return cube_water;
 }
 
@@ -37,18 +37,18 @@ function init() {
     U.push([]);
     V.push([]);
     S.push([]);
+    for (j = 0; j < scene_sqaure; j++) {
+      V[i][j] = 0;
+      S[i][j] = -100;
+      U[i][j] = (i ? -99 : -93);
+    }
+  }
+  for (i = 0; i < scene_sqaure; i++) {
     Mcube_sol.push([]);
     Mcube_water.push([]);
     for (j = 0; j < scene_sqaure; j++) {
-      V[i][j] = 0;
-
-      let cube_sol = cube_sol_create(i, j);
-      S[i][j] = cube_sol.position.y;
-      Mcube_sol[i][j] = cube_sol;
-
-      let cube_water = cube_water_create(i, j);
-      U[i][j] = cube_water.position.y;
-      Mcube_water[i][j] = cube_water;
+      Mcube_sol[i][j] = cube_sol_create(i, j, S[i][j]);
+      Mcube_water[i][j] = cube_water_create(i, j, U[i][j]);
     }
   }
 }
