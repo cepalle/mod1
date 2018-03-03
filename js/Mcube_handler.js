@@ -15,12 +15,12 @@ function Mcube_water_update(Mcube_water, U, V) {
       V[i][j] += f * t;
       V[i][j] *= s;
       Mcube_water[i][j].position.y += V[i][j] * t;
-      Mcube_water[i][j].updateMatrix();
     }
   }
   for (i = 0; i < Mcube_water.length; i++) {
     for (j = 0; j < Mcube_water[i].length; j++) {
       U[i][j] = Mcube_water[i][j].position.y;
+      Mcube_water[i][j].updateMatrix();
     }
   }
 }
