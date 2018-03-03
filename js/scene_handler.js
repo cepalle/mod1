@@ -25,6 +25,7 @@ for (i = 0; i < 50; i++) {
     cube_sol.position.z = j;
     cube_sol.position.y = -1;
     let cube_water = new THREE.Mesh(geometry, materialBleau);
+    cube_water.matrixAutoUpdate = false;
     cube_water.position.x = i;
     cube_water.position.z = j;
     cube_water.position.y = (i ? 0 : 10);
@@ -36,12 +37,15 @@ for (i = 0; i < 50; i++) {
   }
 }
 
-function scene_handler(scene) {
-  Mcube_water_handler(Mcube_water, U, V);
+function scene_init(scene) {
   for (i = 0; i < Mcube_sol.length; i++) {
     for (j = 0; j < Mcube_sol[i].length; j++) {
       scene.add(Mcube_sol[i][j]);
       scene.add(Mcube_water[i][j]);
     }
   }
+}
+
+function scene_update(scene) {
+  Mcube_water_update(Mcube_water, U, V);
 }

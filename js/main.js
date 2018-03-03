@@ -8,12 +8,12 @@ camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 let scene = new THREE.Scene();
 
-scene_handler(scene);
+scene_init(scene);
 
 let animate = () => {
   requestAnimationFrame(animate);
 
-  scene_handler(scene);
+  scene_update(scene);
 
   renderer.render(scene, camera);
 };
