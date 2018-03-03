@@ -1,4 +1,4 @@
-const scene_sqaure = 30;
+const scene_sqaure = 32;
 
 let U = [];
 let V = [];
@@ -10,7 +10,7 @@ init();
 
 function cube_sol_create(i, j) {
   let geometry = new THREE.BoxGeometry(1, 1, 1);
-  let materialVert = new THREE.MeshBasicMaterial({
+  let materialVert = new THREE.MeshStandardMaterial({
     color: 0x00ff00
   });
   let cube_sol = new THREE.Mesh(geometry, materialVert);
@@ -22,14 +22,14 @@ function cube_sol_create(i, j) {
 
 function cube_water_create(i, j) {
   let geometry = new THREE.BoxGeometry(1, 1, 1);
-  let materialBleau = new THREE.MeshBasicMaterial({
+  let materialBleau = new THREE.MeshStandardMaterial({
     color: 0x0000ff
   });
   let cube_water = new THREE.Mesh(geometry, materialBleau);
   cube_water.matrixAutoUpdate = false;
   cube_water.position.x = i;
   cube_water.position.z = j;
-  cube_water.position.y = (i ? 0 : 10);
+  cube_water.position.y = (i ? 0 : 7);
   return cube_water;
 }
 
@@ -55,6 +55,9 @@ function init() {
 }
 
 function scene_init(scene) {
+  let light = new THREE.DirectionalLight(0xffffff, 1, 100);
+  scene.add(light);
+
   for (i = 0; i < scene_sqaure; i++) {
     for (j = 0; j < scene_sqaure; j++) {
       scene.add(Mcube_sol[i][j]);
