@@ -3,9 +3,11 @@ let c = 1;
 let h = 1;
 let s = 0.99;
 
-function Mcube_water_update(Mcube_water, U, V) {
-  for (i = 0; i < Mcube_water.length; i++) {
-    for (j = 0; j < Mcube_water[i].length; j++) {
+function water_update(U, V, S) {
+  let U_cp = [];
+  for (i = 0; i < U.length; i++) {
+    U_cp.push([]);
+    for (j = 0; j < U[i].length; j++) {
       let tot_h = 0;
       tot_h += (i - 1 >= 0 ? U[i - 1][j] : U[i][j]);
       tot_h += (i + 1 < U.length ? U[i + 1][j] : U[i][j]);
@@ -14,12 +16,12 @@ function Mcube_water_update(Mcube_water, U, V) {
       let f = (tot_h - 4 * U[i][j]) * c * c / (h * h)
       V[i][j] += f * t;
       V[i][j] *= s;
-      Mcube_water[i][j].position.y += V[i][j] * t;
+      U_cp[i][j] = U[i][j] + V[i][j] * t;
     }
   }
-  for (i = 0; i < Mcube_water.length; i++) {
-    for (j = 0; j < Mcube_water[i].length; j++) {
-      U[i][j] = Mcube_water[i][j].position.y;
+  for (i = 0; i < U.length; i++) {
+    for (j = 0; j < U[i].length; j++) {
+      U[i][j] = U_cp[i][j];
     }
   }
 }

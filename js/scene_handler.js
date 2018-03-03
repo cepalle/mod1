@@ -66,5 +66,10 @@ function scene_init(scene) {
 }
 
 function scene_update(scene) {
-  Mcube_water_update(Mcube_water, U, V);
+  water_update(U, V, S);
+  for (i = 0; i < scene_sqaure; i++) {
+    for (j = 0; j < scene_sqaure; j++) {
+      Mcube_water[i][j].position.y = U[i][j];
+    }
+  }
 }
