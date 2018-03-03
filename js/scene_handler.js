@@ -30,8 +30,8 @@ function init() {
 }
 
 function scene_init(scene) {
-  //let light = new THREE.DirectionalLight(0xffffff, 1, 100);
-  //scene.add(light);
+  let light = new THREE.DirectionalLight(0xffffff, 1, 100);
+  scene.add(light);
 
 
   // create a simple square shape. We duplicate the top left and bottom right
@@ -45,7 +45,6 @@ function scene_init(scene) {
     0, 0, 0,
     0, 0, 1,
     1, 0, 1,
-
   ]);
 
   geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
