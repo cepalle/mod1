@@ -1,4 +1,4 @@
-const scene_sqaure = 16;
+const scene_sqaure = 2;
 
 const materialVert = new THREE.MeshLambertMaterial({
   color: 0x00ff00,
@@ -48,6 +48,31 @@ function scene_init(scene) {
   ]);
 
   geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+
+
+
+
+
+
+
+
+  let normals = [];
+  for (let i = 0; i <= scene_sqaure; i++) {
+    for (let j = 0; j <= scene_sqaure; j++) {
+      normals.push(0, 0, 1);
+    }
+  }
+  geometry.addAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
+
+
+
+
+
+
+
+
+
   geometry.attributes.position.needsUpdate = true;
   let mesh = new THREE.Mesh(geometry, materialBleau);
   scene.add(mesh);
