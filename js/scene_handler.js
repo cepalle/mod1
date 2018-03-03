@@ -1,6 +1,6 @@
 const scene_sqaure = 32;
 
-const geometry = new THREE.BoxGeometry(1, 100, 1);
+const cube_geometry = new THREE.BoxGeometry(1, 100, 1);
 const materialVert = new THREE.MeshLambertMaterial({
   color: 0x00ff00
 });
@@ -17,7 +17,7 @@ let Mcube_water = [];
 init();
 
 function cube_sol_create(i, j) {
-  let cube_sol = new THREE.Mesh(geometry, materialVert);
+  let cube_sol = new THREE.Mesh(cube_geometry, materialVert);
   cube_sol.position.x = i;
   cube_sol.position.z = j;
   cube_sol.position.y = -100;
@@ -25,7 +25,7 @@ function cube_sol_create(i, j) {
 }
 
 function cube_water_create(i, j) {
-  let cube_water = new THREE.Mesh(geometry, materialBleau);
+  let cube_water = new THREE.Mesh(cube_geometry, materialBleau);
   cube_water.position.x = i;
   cube_water.position.z = j;
   cube_water.position.y = (i ? -99 : -93);
