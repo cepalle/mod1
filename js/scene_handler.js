@@ -1,4 +1,4 @@
-const scene_sqaure = 250;
+const scene_sqaure = 512;
 
 const materialVert = new THREE.MeshLambertMaterial({
   color: 0x00ff00,
@@ -40,49 +40,9 @@ function scene_init(scene) {
 
   let positions = [];
   let normals = [];
-  let colors = [];
-  let color = new THREE.Color();
-  let n = 800,
-    n2 = n / 2; // triangles spread in the cube
-  let d = 12,
-    d2 = d / 2; // individual triangle size
-  let pA = new THREE.Vector3();
-  let pB = new THREE.Vector3();
-  let pC = new THREE.Vector3();
-  let cb = new THREE.Vector3();
-  let ab = new THREE.Vector3();
-  for (let i = 0; i < triangles; i++) {
-    // positions
-    let x = Math.random() * n - n2;
-    let y = Math.random() * n - n2;
-    let z = Math.random() * n - n2;
-    let ax = x + Math.random() * d - d2;
-    let ay = y + Math.random() * d - d2;
-    let az = z + Math.random() * d - d2;
-    let bx = x + Math.random() * d - d2;
-    let by = y + Math.random() * d - d2;
-    let bz = z + Math.random() * d - d2;
-    let cx = x + Math.random() * d - d2;
-    let cy = y + Math.random() * d - d2;
-    let cz = z + Math.random() * d - d2;
-    positions.push(ax, ay, az);
-    positions.push(bx, by, bz);
-    positions.push(cx, cy, cz);
-    // flat face normals
-    pA.set(ax, ay, az);
-    pB.set(bx, by, bz);
-    pC.set(cx, cy, cz);
-    cb.subVectors(pC, pB);
-    ab.subVectors(pA, pB);
-    cb.cross(ab);
-    cb.normalize();
-    let nx = cb.x;
-    let ny = cb.y;
-    let nz = cb.z;
-    normals.push(nx * 32767, ny * 32767, nz * 32767);
-    normals.push(nx * 32767, ny * 32767, nz * 32767);
-    normals.push(nx * 32767, ny * 32767, nz * 32767);
-  }
+
+  positions_normals_upadte(positions, normals);
+
   let positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
   let normalAttribute = new THREE.Int16BufferAttribute(normals, 3);
   normalAttribute.normalized = true; // this will map the buffer values to 0.0f - +1.0f in the shader
@@ -93,14 +53,18 @@ function scene_init(scene) {
   scene.add(mesh);
 }
 
-function positions_upadte() {
-  let positions = geometry.attributes.position.array;
+function positions_normals_upadte(positions, normals) {
   let n = 800,
     n2 = n / 2; // triangles spread in the cube
   let d = 12,
     d2 = d / 2; // individual triangle size
-
+  let pA = new THREE.Vector3();
+  let pB = new THREE.Vector3();
+  let pC = new THREE.Vector3();
+  let cb = new THREE.Vector3();
+  let ab = new THREE.Vector3();
   let k = 0;
+  let h = 0;
   for (let i = 0; i < triangles; i++) {
     // positions
     let x = Math.random() * n - n2;
@@ -124,11 +88,39 @@ function positions_upadte() {
     positions[k++] = cx;
     positions[k++] = cy;
     positions[k++] = cz;
+    // flat face normals
+    pA.set(ax, ay, az);
+    pB.set(bx, by, bz);
+    pC.set(cx, cy, cz);
+    cb.subVectors(pC, pB);
+    ab.subVectors(pA, pB);
+    cb.cross(ab);
+    cb.normalize();
+    let nx = cb.x;
+    let ny = cb.y;
+    let nz = cb.z;
+    normals[h++] = nx * 32767;
+    normals[h++] = ny * 32767;
+    normals[h++] = nz * 32767;
+    normals[h++] = nx * 32767;
+    normals[h++] = ny * 32767;
+    normals[h++] = nz * 32767;
+    normals[h++] = nx * 32767;
+    normals[h++] = ny * 32767;
+    normals[h++] = nz * 32767;
   }
+}
+
+function geometry_upadte() {
+  let positions = geometry.attributes.position.array;
+  let normals = geometry.attributes.normal.array;
+
+  positions_normals_upadte(positions, normals);
   geometry.attributes.position.needsUpdate = true;
+  geometry.attributes.normal.needsUpdate = true;
 }
 
 function scene_update(scene) {
   water_update(U, V, S);
-  positions_upadte();
+  geometry_upadte();
 }
