@@ -4,10 +4,10 @@ const h = 1;
 const s = 0.99;
 
 function water_update(U, V, S) {
-  let U_cp = [];
-  for (i = 0; i < U.length; i++) {
+  const U_cp = [];
+  for (i = 0; i < scene_sqaure; i++) {
     U_cp.push([]);
-    for (j = 0; j < U[i].length; j++) {
+    for (j = 0; j < scene_sqaure; j++) {
       let tot_h = 0;
       tot_h += (i - 1 >= 0 ? U[i - 1][j] : U[i][j]);
       tot_h += (i + 1 < U.length ? U[i + 1][j] : U[i][j]);
@@ -19,8 +19,8 @@ function water_update(U, V, S) {
       U_cp[i][j] = U[i][j] + V[i][j] * t;
     }
   }
-  for (i = 0; i < U.length; i++) {
-    for (j = 0; j < U[i].length; j++) {
+  for (i = 0; i < scene_sqaure; i++) {
+    for (j = 0; j < scene_sqaure; j++) {
       U[i][j] = U_cp[i][j];
     }
   }
