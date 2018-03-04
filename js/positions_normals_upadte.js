@@ -9,6 +9,27 @@ const pC = new THREE.Vector3();
 const cb = new THREE.Vector3();
 const ab = new THREE.Vector3();
 
+const I = [];
+
+init_indices();
+
+function init_indices() {
+  let s1;
+  let s2;
+  let s3;
+  let s4;
+  for (let i = 0; i < scene_sqaure - 1; i++) {
+    for (let j = 0; j < scene_sqaure - 1; j++) {
+      s1 = i + j * scene_sqaure;
+      s2 = s1 + 1;
+      s3 = s1 + j * scene_sqaure;
+      s4 = s3 + 1;
+      I.push(s1, s2, s4);
+      I.push(s1, s3, s4);
+    }
+  }
+}
+
 function positions_normals_upadte(positions, normals, U) {
   let k = 0;
   let h = 0;
