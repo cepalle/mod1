@@ -30,9 +30,12 @@ function init() {
 }
 
 function scene_init(scene) {
-  let light = new THREE.DirectionalLight(0xffffff, 1, 100);
-  scene.add(light);
-
+  let light1 = new THREE.DirectionalLight(0xffffff, 0.5);
+  light1.position.set(1, 1, 0);
+  scene.add(light1);
+  let light2 = new THREE.DirectionalLight(0xffffff, 1.5);
+  light2.position.set(0, 1, 1);
+  scene.add(light2);
 
   let triangles = 500000;
   let geometry = new THREE.BufferGeometry();
