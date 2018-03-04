@@ -8,11 +8,12 @@ const materialBleau = new THREE.MeshBasicMaterial({
   color: 0x0000ff,
   side: THREE.DoubleSide,
 });
+const triangles = 512 * 512;
 
 let U = [];
 let V = [];
 let S = [];
-//let geometry = new THREE.BufferGeometry();
+let geometry = new THREE.BufferGeometry();
 
 init();
 
@@ -37,8 +38,6 @@ function scene_init(scene) {
   light2.position.set(0, 1, 1);
   scene.add(light2);
 
-  let triangles = 500000;
-  let geometry = new THREE.BufferGeometry();
   let positions = [];
   let normals = [];
   let colors = [];
@@ -104,12 +103,41 @@ function scene_init(scene) {
 }
 
 function positions_upadte() {
-  //let positions = geometry.attributes.position.array;
-  //positions[17] = 2;
+  let positions = geometry.attributes.position.array;
+  let n = 800,
+    n2 = n / 2; // triangles spread in the cube
+  let d = 12,
+    d2 = d / 2; // individual triangle size
+
+  let k = 0;
+  for (let i = 0; i < triangles; i++) {
+    // positions
+    let x = Math.random() * n - n2;
+    let y = Math.random() * n - n2;
+    let z = Math.random() * n - n2;
+    let ax = x + Math.random() * d - d2;
+    let ay = y + Math.random() * d - d2;
+    let az = z + Math.random() * d - d2;
+    let bx = x + Math.random() * d - d2;
+    let by = y + Math.random() * d - d2;
+    let bz = z + Math.random() * d - d2;
+    let cx = x + Math.random() * d - d2;
+    let cy = y + Math.random() * d - d2;
+    let cz = z + Math.random() * d - d2;
+    positions[k++] = ax;
+    positions[k++] = ay;
+    positions[k++] = az;
+    positions[k++] = bx;
+    positions[k++] = by;
+    positions[k++] = bz;
+    positions[k++] = cx;
+    positions[k++] = cy;
+    positions[k++] = cz;
+  }
+  geometry.attributes.position.needsUpdate = true;
 }
 
 function scene_update(scene) {
   water_update(U, V, S);
-  //positions_upadte();
-  //geometry.attributes.position.needsUpdate = true;
+  positions_upadte();
 }
