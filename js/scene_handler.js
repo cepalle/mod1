@@ -1,8 +1,8 @@
-const materialVert = new THREE.MeshLambertMaterial({
+const material_sol = new THREE.MeshLambertMaterial({
   color: 0x00ff00,
   side: THREE.DoubleSide,
 });
-const materialBleau = new THREE.MeshLambertMaterial({
+const material_water = new THREE.MeshLambertMaterial({
   color: 0x0000ff,
   side: THREE.DoubleSide,
 });
@@ -10,7 +10,8 @@ const materialBleau = new THREE.MeshLambertMaterial({
 const U = [];
 const V = [];
 const S = [];
-const geometry = new THREE.BufferGeometry();
+const geometry_water = new THREE.BufferGeometry();
+const geometry_sol = new THREE.BufferGeometry();
 
 init();
 
@@ -21,10 +22,23 @@ function init() {
     S.push([]);
     for (j = 0; j < scene_sqaure; j++) {
       V[i][j] = 0;
-      S[i][j] = 0;
-      U[i][j] = (i ? 0 : 10);
+      S[i][j] = 5;
+      U[i][j] = 0;
     }
   }
+}
+
+function init_geo(U, geo) {
+  const positions = [];
+  const normals = [];
+
+  positions_normals_upadte(positions, normals, U);
+
+  const positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
+  const normalAttribute = new THREE.Int16BufferAttribute(normals, 3);
+  normalAttribute.normalized = true; // this will map the buffer values to 0.0f - +1.0f in the shader
+  geo.addAttribute('position', positionAttribute);
+  geo.addAttribute('normal', normalAttribute);
 }
 
 function scene_init(scene) {
@@ -35,22 +49,16 @@ function scene_init(scene) {
   light2.position.set(0, 1, 1);
   scene.add(light2);
 
-  const positions = [];
-  const normals = [];
+  init_geo(U, geometry_water);
+  mesh_water = new THREE.Mesh(geometry_water, material_water);
+  scene.add(mesh_water);
 
-  positions_normals_upadte(positions, normals, U);
-
-  const positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
-  const normalAttribute = new THREE.Int16BufferAttribute(normals, 3);
-  normalAttribute.normalized = true; // this will map the buffer values to 0.0f - +1.0f in the shader
-  geometry.addAttribute('position', positionAttribute);
-  geometry.addAttribute('normal', normalAttribute);
-
-  mesh = new THREE.Mesh(geometry, materialBleau);
-  scene.add(mesh);
+  init_geo(S, geometry_sol);
+  mesh_sol = new THREE.Mesh(geometry_sol, material_sol);
+  scene.add(mesh_sol);
 }
 
-function geometry_upadte() {
+function geometry_upadte(geometry, U) {
   const positions = geometry.attributes.position.array;
   const normals = geometry.attributes.normal.array;
 
@@ -60,6 +68,10 @@ function geometry_upadte() {
 }
 
 function scene_update(scene) {
+  for (let i = 0; i < scene_sqaure; i++) {
+    U[0][i] = 20;
+    V[0][i] = 0;
+  }
   water_update(U, V, S);
-  geometry_upadte();
+  geometry_upadte(geometry_water, U);
 }
