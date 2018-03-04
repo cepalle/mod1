@@ -13,21 +13,23 @@ function init_S(S, lp) {
 
     for (i = 0; i < scene_res; i++) {
       for (j = 0; j < scene_res; j++) {
-        let h1 = 0;
-        let h2 = 0;
+        let k1 = 0;
+        let k2 = 0;
 
         if (i < lp[k][0]) {
-          h1 = lp[k][1] * (1 - Math.cos((i / lp[k][0]) * PI));
+          k1 = (1 - Math.cos((i / lp[k][0]) * PI))
         } else {
-          h1 = lp[k][1] * (1 - Math.cos(((scene_res - i) / (scene_res - lp[k][0])) * PI));
+          k1 = (1 - Math.cos(((scene_res - i) / (scene_res - lp[k][0])) * PI))
         }
 
         if (j < lp[k][2]) {
-          h2 = lp[k][1] * (1 - Math.cos((j / lp[k][2]) * PI));
+          k2 = (1 - Math.cos((j / lp[k][2]) * PI)) / 2;
         } else {
-          h2 = lp[k][1] * (1 - Math.cos(((scene_res - j) / (scene_res - lp[k][2])) * PI));
+          k2 = (1 - Math.cos(((scene_res - j) / (scene_res - lp[k][2])) * PI)) / 2;
         }
 
+        let h1 = lp[k][1] * k1 * k1;
+        let h2 = lp[k][1] * k2 * k2;
         let h = Math.sqrt(h1 * h2);
         S[i][j] = (S[i][j] > h ? S[i][j] : h);
       }
@@ -46,18 +48,12 @@ function init() {
       U[i][j] = -1;
     }
   }
-  /*
   lp = [
     [0.2, 0.1, 0.8],
     [0.2, 0.1, 0.2],
     [0, 0.3, 0],
     [0.5, 0.2, 0.5],
   ];
-  */
-  lp = [
-    [0.5, 0.2, 0.5],
-  ];
-
   init_S(S, lp);
 }
 
@@ -108,7 +104,7 @@ function geometry_upadte(geometry, U) {
 
 function scene_update(scene) {
   for (let i = 0; i < scene_res; i++) {
-    U[0][i] = scene_res / 7;
+    U[0][i] = scene_res * 0.2;
     V[0][i] = 0;
   }
   water_update(U, V, S);
