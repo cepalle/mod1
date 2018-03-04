@@ -1,2 +1,2 @@
-const scene_sqaure = 512;
+const scene_sqaure = 32;
 const triangles = scene_sqaure * scene_sqaure;

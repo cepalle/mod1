@@ -1,6 +1,6 @@
-const n = 800;
+const n = scene_sqaure;
 const n2 = n / 2; // triangles spread in the cube
-const d = 12;
+const d = scene_sqaure / 10;
 const d2 = d / 2; // individual triangle size
 
 const pA = new THREE.Vector3();

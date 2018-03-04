@@ -61,5 +61,5 @@ function geometry_upadte() {
 
 function scene_update(scene) {
   water_update(U, V, S);
-  geometry_upadte();
+  //geometry_upadte();
 }
