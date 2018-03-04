@@ -8,7 +8,9 @@ function cal_dvu(i, j, ii, jj, U, S) {
     }
     return S[ii][jj] - U[i][j];
   }
-  return U[ii][jj] - U[i][j];
+  let dv1 = U[ii][jj] - U[i][j];
+  let dv2 = U[ii][jj] - S[ii][jj];
+  return (dv1 > dv2 ? dv2 : dv1);
 }
 
 function cal_dvs(i, j, ii, jj, U, S) {
@@ -19,7 +21,9 @@ function cal_dvs(i, j, ii, jj, U, S) {
     return 0;
   }
   if (U[ii][jj] > S[i][j]) {
-    return U[ii][jj] - S[i][j];
+    let dv1 = U[ii][jj] - S[i][j];
+    let dv2 = U[ii][jj] - S[ii][jj];
+    return (dv1 > dv2 ? dv1 : dv1); // better with dv1
   }
   return 0;
 }
