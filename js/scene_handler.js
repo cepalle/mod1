@@ -1,17 +1,7 @@
-const material_sol = new THREE.MeshLambertMaterial({
-  color: 0x00ff00,
-  side: THREE.DoubleSide,
-});
-const material_water = new THREE.MeshLambertMaterial({
-  color: 0x0000ff,
-  side: THREE.DoubleSide,
-});
-
 const U = [];
 const V = [];
 const S = [];
 const geometry_water = new THREE.BufferGeometry();
-const geometry_sol = new THREE.BufferGeometry();
 
 init();
 
@@ -48,10 +38,19 @@ function scene_init(scene) {
   light1.position.set(1, 2, 0);
   scene.add(light1);
 
+  const material_water = new THREE.MeshLambertMaterial({
+    color: 0x0000ff,
+    side: THREE.DoubleSide,
+  });
   init_geo(U, geometry_water);
   mesh_water = new THREE.Mesh(geometry_water, material_water);
   scene.add(mesh_water);
 
+  const geometry_sol = new THREE.BufferGeometry();
+  const material_sol = new THREE.MeshLambertMaterial({
+    color: 0x00ff00,
+    side: THREE.DoubleSide,
+  });
   init_geo(S, geometry_sol);
   mesh_sol = new THREE.Mesh(geometry_sol, material_sol);
   scene.add(mesh_sol);
