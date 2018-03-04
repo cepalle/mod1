@@ -3,20 +3,65 @@ const c = 1;
 const h = 1;
 const s = 0.99;
 
+function cal_hu(i, j, ii, jj, U, S) {
+  if (ii < 0 || ii >= scene_sqaure || jj < 0 || jj >= scene_sqaure) {
+    return U[i][j];
+  }
+  if (S[ii][jj] > U[ii][jj]) {
+    if (S[ii][jj] > U[i][j]) {
+      return U[i][j];
+    }
+    return S[ii][jj];
+  }
+  return U[ii][jj];
+}
+
+function cal_hs(i, j, ii, jj, U, S) {
+  if (ii < 0 || ii >= scene_sqaure || jj < 0 || jj >= scene_sqaure) {
+    return S[i][j];
+  }
+  if (S[ii][jj] > U[ii][jj]) {
+    return S[i][j];
+  }
+  if (U[ii][jj] > S[i][j]) {
+    return U[ii][jj];
+  }
+  return S[i][j];
+}
+
 function water_update(U, V, S) {
   const U_cp = [];
   for (i = 0; i < scene_sqaure; i++) {
     U_cp.push([]);
     for (j = 0; j < scene_sqaure; j++) {
-      let tot_h = 0;
-      tot_h += (i - 1 >= 0 ? U[i - 1][j] : U[i][j]);
-      tot_h += (i + 1 < U.length ? U[i + 1][j] : U[i][j]);
-      tot_h += (j - 1 >= 0 ? U[i][j - 1] : U[i][j]);
-      tot_h += (j + 1 < U[i].length ? U[i][j + 1] : U[i][j]);
-      let f = (tot_h - 4 * U[i][j]) * c * c / (h * h)
-      V[i][j] += f * t;
-      V[i][j] *= s;
-      U_cp[i][j] = U[i][j] + V[i][j] * t;
+      if (U[i][j] > S[i][j]) {
+        let tot_h = 0;
+        tot_h += cal_hu(i, j, i - 1, j, U, S);
+        tot_h += cal_hu(i, j, i + 1, j, U, S);
+        tot_h += cal_hu(i, j, i, j - 1, U, S);
+        tot_h += cal_hu(i, j, i, j + 1, U, S);
+        let f = (tot_h - 4 * U[i][j]) * c * c / (h * h)
+        V[i][j] += f * t;
+        V[i][j] *= s;
+        U_cp[i][j] = U[i][j] + V[i][j] * t;
+      } else {
+        V[i][j] = 0;
+
+        let tot_h = 0;
+        tot_h += cal_hs(i, j, i - 1, j, U, S);
+        tot_h += cal_hs(i, j, i + 1, j, U, S);
+        tot_h += cal_hs(i, j, i, j - 1, U, S);
+        tot_h += cal_hs(i, j, i, j + 1, U, S);
+        let f = (tot_h - 4 * S[i][j]) * c * c / (h * h)
+        V[i][j] += f * t;
+        V[i][j] *= s;
+        if (V[i][j] > 0.01) {
+          U_cp[i][j] = S[i][j] + V[i][j] * t;
+        } else {
+          V[i][j] = 0;
+          U_cp[i][j] = -1;
+        }
+      }
     }
   }
   for (i = 0; i < scene_sqaure; i++) {
