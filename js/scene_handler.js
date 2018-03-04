@@ -5,6 +5,36 @@ const geometry_water = new THREE.BufferGeometry();
 
 init();
 
+function init_S(S, lp) {
+  for (let k = 0; k < lp.length; k++) {
+    lp[k][0] *= scene_res;
+    lp[k][1] *= (scene_res / 2);
+    lp[k][2] *= scene_res;
+
+    for (i = 0; i < scene_res; i++) {
+      for (j = 0; j < scene_res; j++) {
+        let h1 = 0;
+        let h2 = 0;
+
+        if (i < lp[k][0]) {
+          h1 = lp[k][1] * (1 - Math.cos((i / lp[k][0]) * PI));
+        } else {
+          h1 = lp[k][1] * (1 - Math.cos(((scene_res - i) / (scene_res - lp[k][0])) * PI));
+        }
+
+        if (j < lp[k][2]) {
+          h2 = lp[k][1] * (1 - Math.cos((j / lp[k][2]) * PI));
+        } else {
+          h2 = lp[k][1] * (1 - Math.cos(((scene_res - j) / (scene_res - lp[k][2])) * PI));
+        }
+
+        let h = Math.sqrt(h1 * h2);
+        S[i][j] = (S[i][j] > h ? S[i][j] : h);
+      }
+    }
+  }
+}
+
 function init() {
   for (i = 0; i < scene_res; i++) {
     U.push([]);
@@ -12,12 +42,17 @@ function init() {
     S.push([]);
     for (j = 0; j < scene_res; j++) {
       V[i][j] = 0;
-      S[i][j] = (i > scene_res / 3 && i < scene_res * 2 / 3 &&
-        j > scene_res / 3 && j < scene_res * 2 / 3 ? 50 : 0);
-      //      S[i][j] = (i + j) / 20;
+      S[i][j] = 0;
       U[i][j] = -1;
     }
   }
+  lp = [
+    [0.2, 0.1, 0.8],
+    [0.2, 0.1, 0.2],
+    [0, 0.3, 0],
+    [0.5, 0.2, 0.5],
+  ];
+  init_S(S, lp);
 }
 
 function init_geo(U, geo) {
