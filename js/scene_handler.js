@@ -21,17 +21,17 @@ function init() {
     S.push([]);
     for (j = 0; j < scene_sqaure; j++) {
       V[i][j] = 0;
-      S[i][j] = -100;
-      U[i][j] = (i ? -99 : -93);
+      S[i][j] = 0;
+      U[i][j] = (i ? 0 : 10);
     }
   }
 }
 
 function scene_init(scene) {
-  const light1 = new THREE.DirectionalLight(0xffffff, 0.5);
+  const light1 = new THREE.DirectionalLight(0xffffff, 1);
   light1.position.set(1, 1, 0);
   scene.add(light1);
-  const light2 = new THREE.DirectionalLight(0xffffff, 1.5);
+  const light2 = new THREE.DirectionalLight(0xffffff, 1);
   light2.position.set(0, 1, 1);
   scene.add(light2);
 
