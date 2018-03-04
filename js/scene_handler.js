@@ -6,14 +6,14 @@ const geometry_water = new THREE.BufferGeometry();
 init();
 
 function init() {
-  for (i = 0; i < scene_sqaure; i++) {
+  for (i = 0; i < scene_res; i++) {
     U.push([]);
     V.push([]);
     S.push([]);
-    for (j = 0; j < scene_sqaure; j++) {
+    for (j = 0; j < scene_res; j++) {
       V[i][j] = 0;
-      S[i][j] = (i > scene_sqaure / 3 && i < scene_sqaure * 2 / 3 &&
-        j > scene_sqaure / 3 && j < scene_sqaure * 2 / 3 ? 50 : 0);
+      S[i][j] = (i > scene_res / 3 && i < scene_res * 2 / 3 &&
+        j > scene_res / 3 && j < scene_res * 2 / 3 ? 50 : 0);
       //      S[i][j] = (i + j) / 20;
       U[i][j] = -1;
     }
@@ -66,7 +66,7 @@ function geometry_upadte(geometry, U) {
 }
 
 function scene_update(scene) {
-  for (let i = 0; i < scene_sqaure; i++) {
+  for (let i = 0; i < scene_res; i++) {
     U[0][i] = 30;
     V[0][i] = 0;
   }

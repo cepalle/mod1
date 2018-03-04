@@ -1,9 +1,5 @@
-const s = 0.99;
-const v_min = -20;
-const v_max = 20;
-
 function cal_dvu(i, j, ii, jj, U, S) {
-  if (ii < 0 || ii >= scene_sqaure || jj < 0 || jj >= scene_sqaure) {
+  if (ii < 0 || ii >= scene_res || jj < 0 || jj >= scene_res) {
     return 0;
   }
   if (S[ii][jj] > U[ii][jj]) {
@@ -16,7 +12,7 @@ function cal_dvu(i, j, ii, jj, U, S) {
 }
 
 function cal_dvs(i, j, ii, jj, U, S) {
-  if (ii < 0 || ii >= scene_sqaure || jj < 0 || jj >= scene_sqaure) {
+  if (ii < 0 || ii >= scene_res || jj < 0 || jj >= scene_res) {
     return 0;
   }
   if (S[ii][jj] > U[ii][jj]) {
@@ -38,9 +34,9 @@ function cal_v(v_old, dv) {
 
 function water_update(U, V, S) {
   const U_cp = [];
-  for (i = 0; i < scene_sqaure; i++) {
+  for (i = 0; i < scene_res; i++) {
     U_cp.push([]);
-    for (j = 0; j < scene_sqaure; j++) {
+    for (j = 0; j < scene_res; j++) {
       let dv = 0;
       if (U[i][j] > S[i][j]) {
         dv += cal_dvu(i, j, i - 1, j, U, S) / 4;
@@ -63,8 +59,8 @@ function water_update(U, V, S) {
       }
     }
   }
-  for (i = 0; i < scene_sqaure; i++) {
-    for (j = 0; j < scene_sqaure; j++) {
+  for (i = 0; i < scene_res; i++) {
+    for (j = 0; j < scene_res; j++) {
       U[i][j] = U_cp[i][j];
     }
   }
