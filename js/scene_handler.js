@@ -4,7 +4,7 @@ const materialVert = new THREE.MeshLambertMaterial({
   color: 0x00ff00,
   side: THREE.DoubleSide,
 });
-const materialBleau = new THREE.MeshBasicMaterial({
+const materialBleau = new THREE.MeshLambertMaterial({
   color: 0x0000ff,
   side: THREE.DoubleSide,
 });
@@ -83,22 +83,13 @@ function scene_init(scene) {
     normals.push(nx * 32767, ny * 32767, nz * 32767);
     normals.push(nx * 32767, ny * 32767, nz * 32767);
   }
-  var positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
-  var normalAttribute = new THREE.Int16BufferAttribute(normals, 3);
+  let positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
+  let normalAttribute = new THREE.Int16BufferAttribute(normals, 3);
   normalAttribute.normalized = true; // this will map the buffer values to 0.0f - +1.0f in the shader
   geometry.addAttribute('position', positionAttribute);
   geometry.addAttribute('normal', normalAttribute);
-  geometry.computeBoundingSphere();
 
-
-
-
-
-  var material = new THREE.MeshLambertMaterial({
-    color: 0x0000ff,
-    side: THREE.DoubleSide, // use full?
-  });
-  mesh = new THREE.Mesh(geometry, material);
+  mesh = new THREE.Mesh(geometry, materialBleau);
   scene.add(mesh);
 }
 
