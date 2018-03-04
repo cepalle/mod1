@@ -1,12 +1,14 @@
-let n = 800;
-let n2 = n / 2; // triangles spread in the cube
-let d = 12;
-let d2 = d / 2; // individual triangle size
-let pA = new THREE.Vector3();
-let pB = new THREE.Vector3();
-let pC = new THREE.Vector3();
-let cb = new THREE.Vector3();
-let ab = new THREE.Vector3();
+const triangles = 512 * 512;
+const n = 800;
+const n2 = n / 2; // triangles spread in the cube
+const d = 12;
+const d2 = d / 2; // individual triangle size
+
+const pA = new THREE.Vector3();
+const pB = new THREE.Vector3();
+const pC = new THREE.Vector3();
+const cb = new THREE.Vector3();
+const ab = new THREE.Vector3();
 
 function positions_normals_upadte(positions, normals, U) {
   let k = 0;

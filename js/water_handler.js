@@ -1,7 +1,7 @@
-let t = 1;
-let c = 1;
-let h = 1;
-let s = 0.99;
+const t = 1;
+const c = 1;
+const h = 1;
+const s = 0.99;
 
 function water_update(U, V, S) {
   let U_cp = [];

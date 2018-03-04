@@ -8,12 +8,11 @@ const materialBleau = new THREE.MeshLambertMaterial({
   color: 0x0000ff,
   side: THREE.DoubleSide,
 });
-const triangles = 512 * 512;
 
-let U = [];
-let V = [];
-let S = [];
-let geometry = new THREE.BufferGeometry();
+const U = [];
+const V = [];
+const S = [];
+const geometry = new THREE.BufferGeometry();
 
 init();
 
