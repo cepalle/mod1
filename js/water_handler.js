@@ -1,9 +1,9 @@
 const t = 1;
 const c = 1;
 const h = 1;
-const s = 0.90;
-const v_min = -2;
-const v_max = 2;
+const s = 0.99;
+const v_min = -20;
+const v_max = 20;
 
 function cal_hu(i, j, ii, jj, U, S) {
   if (ii < 0 || ii >= scene_sqaure || jj < 0 || jj >= scene_sqaure) {

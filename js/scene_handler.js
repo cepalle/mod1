@@ -23,7 +23,7 @@ function init() {
     for (j = 0; j < scene_sqaure; j++) {
       V[i][j] = 0;
       S[i][j] = (i > scene_sqaure / 3 && i < scene_sqaure * 2 / 3 &&
-        j > scene_sqaure / 3 && j < scene_sqaure * 2 / 3 ? 10 : 0);
+        j > scene_sqaure / 3 && j < scene_sqaure * 2 / 3 ? 50 : 0);
       U[i][j] = -1;
     }
   }
