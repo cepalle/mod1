@@ -46,12 +46,18 @@ function init() {
       U[i][j] = -1;
     }
   }
+  /*
   lp = [
     [0.2, 0.1, 0.8],
     [0.2, 0.1, 0.2],
     [0, 0.3, 0],
     [0.5, 0.2, 0.5],
   ];
+  */
+  lp = [
+    [0.5, 0.2, 0.5],
+  ];
+
   init_S(S, lp);
 }
 
@@ -102,7 +108,7 @@ function geometry_upadte(geometry, U) {
 
 function scene_update(scene) {
   for (let i = 0; i < scene_res; i++) {
-    U[0][i] = 30;
+    U[0][i] = scene_res / 7;
     V[0][i] = 0;
   }
   water_update(U, V, S);
