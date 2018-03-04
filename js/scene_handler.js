@@ -11,25 +11,27 @@ function init_S(S, lp) {
     lp[k][1] *= scene_res;
     lp[k][2] *= scene_res;
 
+    let i_min = (lp[k][0] <= scene_res / 2 ? 0 : lp[k][0] * 2 - scene_res);
+    let i_max = (lp[k][0] >= scene_res / 2 ? scene_res : lp[k][0] * 2);
+    let j_min = (lp[k][2] <= scene_res / 2 ? 0 : lp[k][2] * 2 - scene_res);
+    let j_max = (lp[k][2] >= scene_res / 2 ? scene_res : lp[k][2] * 2);
+
     for (i = 0; i < scene_res; i++) {
       for (j = 0; j < scene_res; j++) {
-        let k1 = 0;
-        let k2 = 0;
+        if (i > i_min && i < i_max && j > j_min && j < j_max) {
+          let k1 = 0;
+          let k2 = 0;
+          let i_eq = i - i_min;
+          let j_eq = j - j_min;
 
-        if (i < lp[k][0]) {
-          k1 = (1 - Math.cos((i / lp[k][0]) * PI))
-        } else {
-          k1 = (1 - Math.cos(((scene_res - i) / (scene_res - lp[k][0])) * PI))
+          lpk0_ep = (i_max - i_min) / 2;
+          k1 = (1 - Math.cos((i_eq / lpk0_ep) * PI)) / 2
+          lpk2_ep = (j_max - j_min) / 2;
+          k2 = (1 - Math.cos((j_eq / lpk2_ep) * PI)) / 2;
+
+          let h = lp[k][1] * k2 * k1;
+          S[i][j] = (S[i][j] > h ? S[i][j] : h);
         }
-
-        if (j < lp[k][2]) {
-          k2 = (1 - Math.cos((j / lp[k][2]) * PI)) / 2;
-        } else {
-          k2 = (1 - Math.cos(((scene_res - j) / (scene_res - lp[k][2])) * PI)) / 2;
-        }
-
-        let h = lp[k][1] * k2 * k1 / 2; // Why / 2 ?
-        S[i][j] = (S[i][j] > h ? S[i][j] : h);
       }
     }
   }
@@ -47,10 +49,26 @@ function init() {
     }
   }
   lp = [
-    [0.2, 0.1, 0.8],
-    [0.2, 0.1, 0.2],
-    [0, 0.3, 0],
-    [0.5, 0.4, 0.5],
+    [0.25, 0.35, 0.25],
+    [0.25, 0.35, 0.37],
+    [0.25, 0.35, 0.50],
+    [0.25, 0.35, 0.62],
+    [0.25, 0.35, 0.75],
+
+    [0.37, 0.35, 0.25],
+    [0.37, 0.35, 0.75],
+
+    [0.50, 0.35, 0.25],
+    [0.50, 0.35, 0.75],
+
+    [0.62, 0.35, 0.25],
+    [0.62, 0.35, 0.75],
+
+    [0.75, 0.35, 0.25],
+    [0.75, 0.35, 0.37],
+    [0.75, 0.35, 0.50],
+    [0.75, 0.35, 0.62],
+    [0.75, 0.35, 0.75],
   ];
   init_S(S, lp);
 }
