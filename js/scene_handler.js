@@ -70,7 +70,7 @@ function geometry_upadte(geometry, U) {
 
 function scene_update(scene) {
   for (let i = 0; i < scene_sqaure; i++) {
-    U[0][i] = 3;
+    U[0][i] = 10;
     V[0][i] = 0;
   }
   water_update(U, V, S);
