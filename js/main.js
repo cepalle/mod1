@@ -3,9 +3,9 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 500);
-camera.position.set(scene_sqaure, scene_sqaure, scene_sqaure);
-camera.lookAt(new THREE.Vector3(0, 0, 0));
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+camera.position.set(scene_sqaure * 1.5, scene_sqaure, scene_sqaure * 1.5);
+camera.lookAt(new THREE.Vector3(scene_sqaure / 2, 0, scene_sqaure / 2));
 
 const scene = new THREE.Scene();
 
