@@ -1,5 +1,3 @@
-const scene_sqaure = 512;
-
 const materialVert = new THREE.MeshLambertMaterial({
   color: 0x00ff00,
   side: THREE.DoubleSide,

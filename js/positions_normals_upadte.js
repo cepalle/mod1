@@ -1,4 +1,3 @@
-const triangles = 512 * 512;
 const n = 800;
 const n2 = n / 2; // triangles spread in the cube
 const d = 12;
@@ -36,6 +35,7 @@ function positions_normals_upadte(positions, normals, U) {
     positions[k++] = cx;
     positions[k++] = cy;
     positions[k++] = cz;
+
     // flat face normals
     pA.set(ax, ay, az);
     pB.set(bx, by, bz);
