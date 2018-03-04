@@ -24,6 +24,7 @@ function init() {
       V[i][j] = 0;
       S[i][j] = (i > scene_sqaure / 3 && i < scene_sqaure * 2 / 3 &&
         j > scene_sqaure / 3 && j < scene_sqaure * 2 / 3 ? 50 : 0);
+      //      S[i][j] = (i + j) / 20;
       U[i][j] = -1;
     }
   }
@@ -44,11 +45,8 @@ function init_geo(U, geo) {
 
 function scene_init(scene) {
   const light1 = new THREE.DirectionalLight(0xffffff, 1);
-  light1.position.set(1, 1, 0);
+  light1.position.set(1, 2, 0);
   scene.add(light1);
-  const light2 = new THREE.DirectionalLight(0xffffff, 1);
-  light2.position.set(0, 1, 1);
-  scene.add(light2);
 
   init_geo(U, geometry_water);
   mesh_water = new THREE.Mesh(geometry_water, material_water);
@@ -70,7 +68,7 @@ function geometry_upadte(geometry, U) {
 
 function scene_update(scene) {
   for (let i = 0; i < scene_sqaure; i++) {
-    U[0][i] = 10;
+    U[0][i] = 30;
     V[0][i] = 0;
   }
   water_update(U, V, S);

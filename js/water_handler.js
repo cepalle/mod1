@@ -48,14 +48,19 @@ function water_update(U, V, S) {
         dv += cal_dvu(i, j, i, j - 1, U, S) / 4;
         dv += cal_dvu(i, j, i, j + 1, U, S) / 4;
         V[i][j] = cal_v(V[i][j], dv);
+        U_cp[i][j] = U[i][j] + V[i][j];
       } else {
         dv += cal_dvs(i, j, i - 1, j, U, S) / 4;
         dv += cal_dvs(i, j, i + 1, j, U, S) / 4;
         dv += cal_dvs(i, j, i, j - 1, U, S) / 4;
         dv += cal_dvs(i, j, i, j + 1, U, S) / 4;
         V[i][j] = cal_v(V[i][j], dv);
+        if (V[i][j] > 0.01) {
+          U_cp[i][j] = S[i][j] + V[i][j];
+        } else {
+          U_cp[i][j] = -1;
+        }
       }
-      U_cp[i][j] = U[i][j] + V[i][j];
     }
   }
   for (i = 0; i < scene_sqaure; i++) {
