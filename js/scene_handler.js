@@ -8,7 +8,7 @@ init();
 function init_S(S, lp) {
   for (let k = 0; k < lp.length; k++) {
     lp[k][0] *= scene_res;
-    lp[k][1] *= (scene_res / 2);
+    lp[k][1] *= scene_res;
     lp[k][2] *= scene_res;
 
     for (i = 0; i < scene_res; i++) {
@@ -28,9 +28,7 @@ function init_S(S, lp) {
           k2 = (1 - Math.cos(((scene_res - j) / (scene_res - lp[k][2])) * PI)) / 2;
         }
 
-        let h1 = lp[k][1] * k1 * k1;
-        let h2 = lp[k][1] * k2 * k2;
-        let h = Math.sqrt(h1 * h2);
+        let h = lp[k][1] * k2 * k1 / 2; // Why / 2 ?
         S[i][j] = (S[i][j] > h ? S[i][j] : h);
       }
     }
@@ -52,7 +50,7 @@ function init() {
     [0.2, 0.1, 0.8],
     [0.2, 0.1, 0.2],
     [0, 0.3, 0],
-    [0.5, 0.2, 0.5],
+    [0.5, 0.4, 0.5],
   ];
   init_S(S, lp);
 }
