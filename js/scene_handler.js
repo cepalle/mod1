@@ -22,7 +22,8 @@ function init() {
     S.push([]);
     for (j = 0; j < scene_sqaure; j++) {
       V[i][j] = 0;
-      S[i][j] = (i > 100 && i < 156 && j > 100 && j < 156 ? 50 : 0);
+      S[i][j] = (i > scene_sqaure / 3 && i < scene_sqaure * 2 / 3 &&
+        j > scene_sqaure / 3 && j < scene_sqaure * 2 / 3 ? 10 : 0);
       U[i][j] = -1;
     }
   }

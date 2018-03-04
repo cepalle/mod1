@@ -1,7 +1,9 @@
 const t = 1;
 const c = 1;
 const h = 1;
-const s = 0.99;
+const s = 0.90;
+const v_min = -2;
+const v_max = 2;
 
 function cal_hu(i, j, ii, jj, U, S) {
   if (ii < 0 || ii >= scene_sqaure || jj < 0 || jj >= scene_sqaure) {
@@ -29,6 +31,14 @@ function cal_hs(i, j, ii, jj, U, S) {
   return S[i][j];
 }
 
+function cal_v(v_old, f) {
+  v_old += f * t;
+  v_old *= s;
+  v_old = (v_old < v_min ? v_min : v_old);
+  v_old = (v_old > v_max ? v_max : v_old);
+  return v_old;
+}
+
 function water_update(U, V, S) {
   const U_cp = [];
   for (i = 0; i < scene_sqaure; i++) {
@@ -41,8 +51,7 @@ function water_update(U, V, S) {
         tot_h += cal_hu(i, j, i, j - 1, U, S);
         tot_h += cal_hu(i, j, i, j + 1, U, S);
         let f = (tot_h - 4 * U[i][j]) * c * c / (h * h)
-        V[i][j] += f * t;
-        V[i][j] *= s;
+        V[i][j] = cal_v(V[i][j], f);
         U_cp[i][j] = U[i][j] + V[i][j] * t;
       } else {
         V[i][j] = 0;
@@ -53,8 +62,7 @@ function water_update(U, V, S) {
         tot_h += cal_hs(i, j, i, j - 1, U, S);
         tot_h += cal_hs(i, j, i, j + 1, U, S);
         let f = (tot_h - 4 * S[i][j]) * c * c / (h * h)
-        V[i][j] += f * t;
-        V[i][j] *= s;
+        V[i][j] = cal_v(V[i][j], f);
         if (V[i][j] > 0.01) {
           U_cp[i][j] = S[i][j] + V[i][j] * t;
         } else {
