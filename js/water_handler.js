@@ -1,6 +1,3 @@
-const t = 1;
-const c = 1;
-const h = 1;
 const s = 0.99;
 const v_min = -20;
 const v_max = 20;
@@ -32,7 +29,7 @@ function cal_hs(i, j, ii, jj, U, S) {
 }
 
 function cal_v(v_old, f) {
-  v_old += f * t;
+  v_old += f;
   v_old *= s;
   v_old = (v_old < v_min ? v_min : v_old);
   v_old = (v_old > v_max ? v_max : v_old);
@@ -50,9 +47,9 @@ function water_update(U, V, S) {
         tot_h += cal_hu(i, j, i + 1, j, U, S);
         tot_h += cal_hu(i, j, i, j - 1, U, S);
         tot_h += cal_hu(i, j, i, j + 1, U, S);
-        let f = (tot_h - 4 * U[i][j]) * c * c / (h * h)
+        let f = (tot_h - 4 * U[i][j])
         V[i][j] = cal_v(V[i][j], f);
-        U_cp[i][j] = U[i][j] + V[i][j] * t;
+        U_cp[i][j] = U[i][j] + V[i][j];
       } else {
         V[i][j] = 0;
 
@@ -61,10 +58,10 @@ function water_update(U, V, S) {
         tot_h += cal_hs(i, j, i + 1, j, U, S);
         tot_h += cal_hs(i, j, i, j - 1, U, S);
         tot_h += cal_hs(i, j, i, j + 1, U, S);
-        let f = (tot_h - 4 * S[i][j]) * c * c / (h * h)
+        let f = (tot_h - 4 * S[i][j])
         V[i][j] = cal_v(V[i][j], f);
         if (V[i][j] > 0.01) {
-          U_cp[i][j] = S[i][j] + V[i][j] * t;
+          U_cp[i][j] = S[i][j] + V[i][j];
         } else {
           V[i][j] = 0;
           U_cp[i][j] = -1;
