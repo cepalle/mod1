@@ -1,4 +1,4 @@
 # 42_mod1
-Ce projet est un simulateur d’écoulement d’eau sur une surface.
+This project is a simulator of water flow on a surface.
 
 Use Height field Fluids approaches.
