@@ -1,2 +1,2 @@
 # 42_mod1
-work in progress
+Ce projet est un simulateur d’écoulement d’eau sur une surface.
