@@ -39,10 +39,12 @@ function positions_normals_upadte(positions, normals, M) {
   let h = 0;
   for (let i = 0; i < scene_res - 1; i++) {
     for (let j = 0; j < scene_res - 1; j++) {
-      let a = [i, M[i][j], j];
-      let b = [i + 1, M[i + 1][j], j];
-      let c = [i, M[i][j + 1], j + 1];
-      let d = [i + 1, M[i + 1][j + 1], j + 1];
+      let i_eq = i - scene_res / 2;
+      let j_eq = j - scene_res / 2;
+      let a = [i_eq, M[i][j], j_eq];
+      let b = [i_eq + 1, M[i + 1][j], j_eq];
+      let c = [i_eq, M[i][j + 1], j_eq + 1];
+      let d = [i_eq + 1, M[i + 1][j + 1], j_eq + 1];
 
       // positions
       add_pos(positions, k, [a, d, b]);

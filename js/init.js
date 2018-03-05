@@ -1,3 +1,8 @@
+// Constant
+const s = 0.99;
+const PI = Math.PI;
+const wdim = 0.9;
+
 // Stats
 const stats = new Stats();
 stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
@@ -6,10 +11,20 @@ document.body.appendChild(stats.dom);
 // Threejs
 const renderer = new THREE.WebGLRenderer();
 renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(window.innerWidth, window.innerHeight * wdim);
 document.body.appendChild(renderer.domElement);
 
-const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / (window.innerHeight * wdim), 1, 2000);
+
+function onWindowResize() {
+  camera.aspect = window.innerWidth / (window.innerHeight * wdim);
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight * wdim);
+}
+window.addEventListener('resize', onWindowResize, false);
+
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableZoom = true;
 
 const light1 = new THREE.DirectionalLight(0xffffff, 1);
 light1.position.set(1, 2, 0);
@@ -35,10 +50,6 @@ let leak = false;
 
 let run = false;
 let need_update = true;
-
-// Constant
-const s = 0.99;
-const PI = Math.PI;
 
 // UVS matrice for calcul water
 const U = [];
@@ -109,11 +120,3 @@ gui.add(params, 'leak').onFinishChange(function() {
 gui.add(params, 'start');
 gui.add(params, 'stop');
 gui.add(params, 'restart');
-
-/*
-gui.add(params, 'interation').onFinishChange(function() {
-  // refresh based on the new value of params.interation
-})
-gui.add(params, 'interation').name('Intertions')
-gui.add(params, 'width').min(128).max(256).step(16)
-*/
