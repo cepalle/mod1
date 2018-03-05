@@ -18,20 +18,31 @@ function animate() {
   stats.begin();
 
   requestAnimationFrame(animate);
-  scene_update(scene);
 
+  scene_update(scene);
   renderer.render(scene, camera);
+
   stats.end();
 };
 
 
 
-var gui = new dat.GUI({
+let gui = new dat.GUI({
   height: 5 * 32 - 1
 });
 
+/*
+let params = {
+  interation: 5000
+};
 
-
+gui.add(params, 'interation')
+gui.add(params, 'interation').onFinishChange(function() {
+  // refresh based on the new value of params.interation
+})
+gui.add(params, 'interation').name('Intertions')
+gui.add(params, 'width').min(128).max(256).step(16)
+*/
 
 
 
