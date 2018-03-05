@@ -31,6 +31,7 @@ let scene_res = 128;
 let wave = false;
 let rain = false;
 let rising = false;
+let leak = false;
 
 let run = false;
 let need_update = true;
@@ -80,6 +81,7 @@ const params = {
   wave: false,
   rain: false,
   rising: false,
+  leak: false,
   start: function() {
     run = true;
   },
@@ -87,7 +89,6 @@ const params = {
     run = false;
   },
   restart: function() {
-    run = true;
     need_update = true;
   }
 };
@@ -100,19 +101,16 @@ gui.add(params, 'resolution').min(128).max(256).step(16).onFinishChange(function
   need_update = true;
 });
 gui.add(params, 'wave').onFinishChange(function() {
-  console.log(params.wave);
-  run = false;
-  need_update = true;
+  wave = params.wave;
 });
 gui.add(params, 'rain').onFinishChange(function() {
-  console.log(params.rain);
-  run = false;
-  need_update = true;
+  rain = params.rain;
 });
 gui.add(params, 'rising').onFinishChange(function() {
-  console.log(params.rain);
-  run = false;
-  need_update = true;
+  rising = params.rising;
+});
+gui.add(params, 'leak').onFinishChange(function() {
+  leak = params.leak;
 });
 gui.add(params, 'start');
 gui.add(params, 'stop');
