@@ -6,7 +6,7 @@ function init_geo(M, geo) {
 
   const positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
   const normalAttribute = new THREE.Int16BufferAttribute(normals, 3);
-  normalAttribute.normalized = true; // this will map the buffer values to 0.0f - +1.0f in the shader
+  normalAttribute.normalized = true;
   geo.addAttribute('position', positionAttribute);
   geo.addAttribute('normal', normalAttribute);
 }

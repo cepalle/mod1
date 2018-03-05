@@ -41,7 +41,6 @@ function filtre(M) {
   }
 }
 
-// interpolation bilineaire?
 function init_S() {
   for (let k = 0; k < S_lp.length; k++) {
     let S_lp0_scale = S_lp[k][0] * scene_res;

@@ -1,4 +1,4 @@
-// Constant
+// Constants
 const s = 0.99;
 const PI = Math.PI;
 const wdim = 0.9;
@@ -28,12 +28,13 @@ controls.enableZoom = true;
 
 const light1 = new THREE.DirectionalLight(0xffffff, 1);
 light1.position.set(1, 2, 0);
+
 const material_water = new THREE.MeshLambertMaterial({
-  color: 0x0000ff,
+  color: 0x1133dd,
   side: THREE.DoubleSide,
 });
 const material_sol = new THREE.MeshLambertMaterial({
-  color: 0x00ff00,
+  color: 0x33dd11,
   side: THREE.DoubleSide,
 });
 
@@ -47,7 +48,6 @@ let wave = false;
 let rain = false;
 let rising = false;
 let leak = false;
-
 let run = false;
 let need_update = true;
 
