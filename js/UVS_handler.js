@@ -1,5 +1,15 @@
 // Use scene_res, U, U_cp, V, S, S_lp, PI
 
+function set_input_S() {
+  let text = document.getElementById("input_S_lp").value;
+  S_lp = text.split("\n").map(
+    el => el.split(' ').map(
+      el => parseFloat(el)
+    )
+  ).filter(el => el.length >= 3);
+  need_update = true;
+}
+
 function filtre(M) {
   let M_cp = [];
   for (i = 0; i < scene_res; i++) {
