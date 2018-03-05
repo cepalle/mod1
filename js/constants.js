@@ -11,7 +11,20 @@ document.body.appendChild(renderer.domElement);
 
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
 
-const scene = new THREE.Scene();
+const light1 = new THREE.DirectionalLight(0xffffff, 1);
+light1.position.set(1, 2, 0);
+const material_water = new THREE.MeshLambertMaterial({
+  color: 0x0000ff,
+  side: THREE.DoubleSide,
+});
+const material_sol = new THREE.MeshLambertMaterial({
+  color: 0x00ff00,
+  side: THREE.DoubleSide,
+});
+
+let scene;
+let geometry_water;
+let geometry_sol;
 
 // Gui variable
 let scene_res = 128;
@@ -28,6 +41,7 @@ const PI = Math.PI;
 
 // UVS matrice for calcul water
 const U = [];
+const U_cp = [];
 const V = [];
 const S = [];
 

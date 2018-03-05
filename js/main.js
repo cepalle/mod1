@@ -6,15 +6,15 @@ function animate() {
   if (need_update) {
     camera.position.set(scene_res * 1.5, scene_res * 1.5, scene_res * 1.5);
     camera.lookAt(new THREE.Vector3(scene_res / 2, 0, scene_res / 2));
-    scene_init(scene, lp);
+    scene_init();
     need_update = false;
   }
 
   if (run) {
-    scene_update(scene);
+    scene_update();
   }
-  renderer.render(scene, camera);
 
+  renderer.render(scene, camera);
   stats.end();
 };
 

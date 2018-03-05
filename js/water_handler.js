@@ -1,3 +1,5 @@
+// Use U, U_cp, S, V
+
 function cal_dvu(i, j, ii, jj) {
   if (ii < 0 || ii >= scene_res || jj < 0 || jj >= scene_res) {
     return 0;
@@ -38,13 +40,6 @@ function cal_v(v_old, dv) {
 }
 
 function water_update() {
-  const U_cp = [];
-  for (i = 0; i < scene_res; i++) {
-    U_cp.push([]);
-    for (j = 0; j < scene_res; j++) {
-      U_cp[i][j] = 0;
-    }
-  }
   for (i = 0; i < scene_res; i++) {
     for (j = 0; j < scene_res; j++) {
       let dv = 0;

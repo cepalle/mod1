@@ -1,3 +1,5 @@
+// Use scene_res, U, U_cp, V, S, lp, PI
+
 function init_S() {
   for (let k = 0; k < lp.length; k++) {
     lp[k][0] *= scene_res;
@@ -34,6 +36,9 @@ function init_UVS() {
   while (U.length) {
     U.pop();
   }
+  while (U_cp.length) {
+    U_cp.pop();
+  }
   while (V.length) {
     V.pop();
   }
@@ -43,12 +48,14 @@ function init_UVS() {
 
   for (i = 0; i < scene_res; i++) {
     U.push([]);
+    U_cp.push([]);
     V.push([]);
     S.push([]);
     for (j = 0; j < scene_res; j++) {
+      U[i][j] = -1;
+      U_cp[i][j] = -1;
       V[i][j] = 0;
       S[i][j] = 0;
-      U[i][j] = -1;
     }
   }
   init_S();
