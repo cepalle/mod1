@@ -12,7 +12,7 @@ function init_geo(M, geo) {
 }
 
 function scene_init() {
-  init_UVS(lp);
+  init_UVS();
 
   scene = new THREE.Scene();
   scene.add(light1);
