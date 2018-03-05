@@ -1,4 +1,4 @@
-function cal_dvu(i, j, ii, jj, U, S) {
+function cal_dvu(i, j, ii, jj) {
   if (ii < 0 || ii >= scene_res || jj < 0 || jj >= scene_res) {
     return 0;
   }
@@ -13,7 +13,7 @@ function cal_dvu(i, j, ii, jj, U, S) {
   return (dv1 > dv2 ? dv2 : dv1);
 }
 
-function cal_dvs(i, j, ii, jj, U, S) {
+function cal_dvs(i, j, ii, jj) {
   if (ii < 0 || ii >= scene_res || jj < 0 || jj >= scene_res) {
     return 0;
   }
@@ -37,7 +37,7 @@ function cal_v(v_old, dv) {
   return v_old;
 }
 
-function water_update(U, V, S) {
+function water_update() {
   const U_cp = [];
   for (i = 0; i < scene_res; i++) {
     U_cp.push([]);

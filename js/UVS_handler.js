@@ -1,8 +1,4 @@
-const U = [];
-const V = [];
-const S = [];
-
-function init_S(lp) {
+function init_S() {
   for (let k = 0; k < lp.length; k++) {
     lp[k][0] *= scene_res;
     lp[k][1] *= scene_res;
@@ -34,7 +30,7 @@ function init_S(lp) {
   }
 }
 
-function init_UVS(lp) {
+function init_UVS() {
   while (U.length) {
     U.pop();
   }
@@ -55,5 +51,5 @@ function init_UVS(lp) {
       U[i][j] = -1;
     }
   }
-  init_S(lp);
+  init_S();
 }
