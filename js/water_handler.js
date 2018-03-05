@@ -1,5 +1,3 @@
-// Use U, U_cp, S, V
-
 function wave_update() {
   for (let i = 0; i < scene_res; i++) {
     U[0][i] = scene_res * 0.2;

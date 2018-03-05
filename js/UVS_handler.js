@@ -1,12 +1,18 @@
-// Use scene_res, U, U_cp, V, S, S_lp, PI
-
 function set_input_S() {
   let text = document.getElementById("input_S_lp").value;
-  S_lp = text.split("\n").map(
-    el => el.split(' ').map(
-      el => parseFloat(el)
-    )
-  ).filter(el => el.length >= 3);
+  S_lp = text.split("\n").map(test_split =>
+    test_split.split(' ').map(flt_txt =>
+      parseFloat(flt_txt)
+    ).map(flt => {
+      if (flt < 0) {
+        return 0;
+      } else if (flt > 1) {
+        return 1;
+      } else {
+        return flt;
+      }
+    })
+  ).filter(coord => coord.length >= 3);
   need_update = true;
 }
 
