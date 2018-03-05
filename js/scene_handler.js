@@ -38,9 +38,17 @@ function geometry_upadte(geometry, M) {
 }
 
 function scene_update() {
-  for (let i = 0; i < scene_res; i++) {
-    U[0][i] = scene_res * 0.2;
-    V[0][i] = 0;
+  if (wave) {
+    wave_update();
+  }
+  if (rain) {
+    rain_update();
+  }
+  if (rising) {
+    rising_update();
+  }
+  if (leak) {
+    leak_update();
   }
   water_update(U, V, S);
   geometry_upadte(geometry_water, U);

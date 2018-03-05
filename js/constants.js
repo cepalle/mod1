@@ -97,7 +97,6 @@ const gui = new dat.GUI();
 
 gui.add(params, 'resolution').min(128).max(256).step(16).onFinishChange(function() {
   scene_res = params.resolution;
-  run = false;
   need_update = true;
 });
 gui.add(params, 'wave').onFinishChange(function() {

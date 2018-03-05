@@ -1,5 +1,49 @@
 // Use U, U_cp, S, V
 
+function wave_update() {
+  for (let i = 0; i < scene_res; i++) {
+    U[0][i] = scene_res * 0.2;
+    V[0][i] = 0;
+  }
+}
+
+function rain_update() {
+  for (let i = 0; i < scene_res; i++) {
+    for (let j = 0; j < scene_res; j++) {
+      if (Math.random() < 1 / 256) {
+        if (U[i][j] > S[i][j]) {
+          U[i][j] += 0.1;
+        } else {
+          U[i][j] = S[i][j] + 0.1;
+        }
+      }
+    }
+  }
+}
+
+function rising_update() {
+  for (let i = 0; i < scene_res; i++) {
+    for (let j = 0; j < scene_res; j++) {
+      if (U[i][j] > S[i][j]) {
+        U[i][j] += 0.1;
+      } else if (S[i][j] < 2) {
+        U[i][j] = 2;
+      }
+    }
+  }
+}
+
+function leak_update() {
+  for (let i = 0; i < scene_res; i++) {
+    for (let j = 0; j < scene_res; j++) {
+      if (U[i][j] > S[i][j]) {
+        U[i][j] -= 0.1;
+        U[i][j] = (U[i][j] > S[i][j] ? U[i][j] : -1);
+      }
+    }
+  }
+}
+
 function cal_dvu(i, j, ii, jj) {
   if (ii < 0 || ii >= scene_res || jj < 0 || jj >= scene_res) {
     return 0;
