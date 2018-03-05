@@ -1,5 +1,31 @@
 // Use scene_res, U, U_cp, V, S, S_lp, PI
 
+function filtre(M) {
+  let M_cp = [];
+  for (i = 0; i < scene_res; i++) {
+    M_cp.push([]);
+    for (j = 0; j < scene_res; j++) {
+      M_cp[i][j] = 0;
+    }
+  }
+  for (i = 1; i < scene_res - 1; i++) {
+    for (j = 1; j < scene_res - 1; j++) {
+      M_cp[i][j] += M[i][j];
+      M_cp[i][j] += M[i + 1][j];
+      M_cp[i][j] += M[i - 1][j];
+      M_cp[i][j] += M[i][j + 1];
+      M_cp[i][j] += M[i][j - 1];
+      M_cp[i][j] /= 5;
+    }
+  }
+  for (i = 1; i < scene_res - 1; i++) {
+    for (j = 1; j < scene_res - 1; j++) {
+      M[i][j] = M_cp[i][j];
+    }
+  }
+}
+
+// interpolation bilineaire?
 function init_S() {
   for (let k = 0; k < S_lp.length; k++) {
     let S_lp0_scale = S_lp[k][0] * scene_res;
@@ -29,6 +55,9 @@ function init_S() {
         }
       }
     }
+  }
+  for (let i = 0; i < scene_res / 4; i++) {
+    filtre(S);
   }
 }
 
