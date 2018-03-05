@@ -25,25 +25,43 @@ function animate() {
   stats.end();
 };
 
-
+const params = {
+  resolution: 128,
+  wave: false,
+  rain: false,
+  rising: false,
+  start: function() {
+    console.log('start');
+  },
+  stop: function() {
+    console.log('stop');
+  }
+};
 
 let gui = new dat.GUI({
   height: 5 * 32 - 1
 });
 
-/*
-let params = {
-  interation: 5000
-};
+gui.add(params, 'resolution').min(128).max(256).step(16);
+gui.add(params, 'wave').onFinishChange(function() {
+  console.log(params.wave);
+});
+gui.add(params, 'rain').onFinishChange(function() {
+  console.log(params.rain);
+});
+gui.add(params, 'rising').onFinishChange(function() {
+  console.log(params.rain);
+});
+gui.add(params, 'start');
+gui.add(params, 'stop');
 
-gui.add(params, 'interation')
+/*
 gui.add(params, 'interation').onFinishChange(function() {
   // refresh based on the new value of params.interation
 })
 gui.add(params, 'interation').name('Intertions')
 gui.add(params, 'width').min(128).max(256).step(16)
 */
-
 
 
 
