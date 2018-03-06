@@ -1,6 +1,6 @@
 function wave_update() {
   for (let i = 0; i < scene_res; i++) {
-    U[i][scene_res - 1] = scene_res * 0.2;
+    U[i][scene_res - 1] = scene_res * wave_height;
     V[i][scene_res - 1] = 0;
   }
 }
@@ -8,7 +8,7 @@ function wave_update() {
 function rain_update() {
   for (let i = 0; i < scene_res; i++) {
     for (let j = 0; j < scene_res; j++) {
-      if (Math.random() < 1 / 256) {
+      if (Math.random() < rain_speed * 32 / scene_res) {
         if (U[i][j] > S[i][j]) {
           U[i][j] += 0.1;
         } else {
@@ -23,7 +23,7 @@ function rising_update() {
   for (let i = 0; i < scene_res; i++) {
     for (let j = 0; j < scene_res; j++) {
       if (U[i][j] > S[i][j]) {
-        U[i][j] += 0.1;
+        U[i][j] += rising_speed;
       } else if (S[i][j] < 2) {
         U[i][j] = 2;
       }
@@ -35,7 +35,7 @@ function leak_update() {
   for (let i = 0; i < scene_res; i++) {
     for (let j = 0; j < scene_res; j++) {
       if (U[i][j] > S[i][j]) {
-        U[i][j] -= 0.1;
+        U[i][j] -= leak_speed;
         U[i][j] = (U[i][j] > S[i][j] ? U[i][j] : -1);
       }
     }

@@ -45,9 +45,13 @@ let geometry_sol;
 // Gui variable
 let scene_res = 128;
 let wave = false;
+let wave_height = 0.1;
 let rain = false;
+let rain_speed = 0.3;
 let rising = false;
+let rising_speed = 0.1;
 let leak = false;
+let leak_speed = 0.1;
 let need_update = true;
 
 // UVS matrice for calcul water
@@ -94,9 +98,13 @@ const params = {
     need_update = true;
   },
   wave: false,
+  wave_height: 0.1,
   rain: false,
+  rain_speed: 0.3,
   rising: false,
+  rising_speed: 0.1,
   leak: false,
+  leak_speed: 0.1,
   ground_4: function() {
     S_lp = [
       [0.25, 0.35, 0.25],
@@ -138,14 +146,27 @@ gui.add(params, 'ground_1');
 gui.add(params, 'ground_2');
 gui.add(params, 'ground_3');
 gui.add(params, 'ground_4');
+
+gui.add(params, 'wave_height').min(0).max(0.5).step(0.02).onFinishChange(function() {
+  wave_height = params.wave_height;
+});
 gui.add(params, 'wave').onFinishChange(function() {
   wave = params.wave;
+});
+gui.add(params, 'rain_speed').min(0.05).max(1).step(0.05).onFinishChange(function() {
+  rain_speed = params.rain_speed;
 });
 gui.add(params, 'rain').onFinishChange(function() {
   rain = params.rain;
 });
+gui.add(params, 'rising_speed').min(0.02).max(0.2).step(0.02).onFinishChange(function() {
+  rising_speed = params.rising_speed;
+});
 gui.add(params, 'rising').onFinishChange(function() {
   rising = params.rising;
+});
+gui.add(params, 'leak_speed').min(0.02).max(0.2).step(0.02).onFinishChange(function() {
+  leak_speed = params.leak_speed;
 });
 gui.add(params, 'leak').onFinishChange(function() {
   leak = params.leak;
