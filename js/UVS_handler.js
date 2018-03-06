@@ -3,7 +3,7 @@ function set_input_S() {
   S_lp = text.split("\n").map(test_split =>
     test_split.split(' ').map(flt_txt =>
       parseFloat(flt_txt)
-    ).map(flt => {
+    ).map(x => x / 10000).map(flt => {
       if (flt < 0) {
         return 0;
       } else if (flt > 1) {
@@ -16,58 +16,37 @@ function set_input_S() {
   need_update = true;
 }
 
-function filtre(M) {
-  let M_cp = [];
-  for (i = 0; i < scene_res; i++) {
-    M_cp.push([]);
-    for (j = 0; j < scene_res; j++) {
-      M_cp[i][j] = 0;
-    }
-  }
-  for (i = 1; i < scene_res - 1; i++) {
-    for (j = 1; j < scene_res - 1; j++) {
-      M_cp[i][j] += M[i][j];
-      M_cp[i][j] += M[i + 1][j];
-      M_cp[i][j] += M[i - 1][j];
-      M_cp[i][j] += M[i][j + 1];
-      M_cp[i][j] += M[i][j - 1];
-      M_cp[i][j] /= 5;
-    }
-  }
-  for (i = 1; i < scene_res - 1; i++) {
-    for (j = 1; j < scene_res - 1; j++) {
-      M[i][j] = M_cp[i][j];
-    }
-  }
+function cal_coef(a) {
+  return 1 / (a * a * a);
 }
 
 function init_S() {
-  for (let k = 0; k < S_lp.length; k++) {
-    let S_lp0_scale = S_lp[k][0] * scene_res;
-    let S_lp1_scale = S_lp[k][1] * scene_res;
-    let S_lp2_scale = S_lp[k][2] * scene_res;
-
-    let i_min = (S_lp0_scale <= scene_res / 2 ? 0 : S_lp0_scale * 2 - scene_res);
-    let i_max = (S_lp0_scale >= scene_res / 2 ? scene_res : S_lp0_scale * 2);
-    let j_min = (S_lp2_scale <= scene_res / 2 ? 0 : S_lp2_scale * 2 - scene_res);
-    let j_max = (S_lp2_scale >= scene_res / 2 ? scene_res : S_lp2_scale * 2);
-
-    for (i = 1; i < scene_res - 1; i++) {
-      for (j = 1; j < scene_res - 1; j++) {
-        if (i > i_min && i < i_max && j > j_min && j < j_max) {
-          let k1 = 0;
-          let k2 = 0;
-          let i_eq = i - i_min;
-          let j_eq = j - j_min;
-
-          lpk0_ep = (i_max - i_min) / 2;
-          k1 = (1 - Math.cos((i_eq / lpk0_ep) * PI)) / 2
-          lpk2_ep = (j_max - j_min) / 2;
-          k2 = (1 - Math.cos((j_eq / lpk2_ep) * PI)) / 2;
-
-          let h = S_lp1_scale * k2 * k1;
-          S[i][j] = (S[i][j] > h ? S[i][j] : h);
+  for (i = 1; i < scene_res - 1; i++) {
+    for (j = 1; j < scene_res - 1; j++) {
+      let deno = 0;
+      let score = 0;
+      deno += cal_coef(i);
+      deno += cal_coef(scene_res - i);
+      deno += cal_coef(j);
+      deno += cal_coef(scene_res - j);
+      for (let k = 0; k < S_lp.length; k++) {
+        let S_lpkx = S_lp[k][0] * scene_res;
+        let S_lpky = S_lp[k][1] * scene_res;
+        let S_lpkz = S_lp[k][2] * scene_res;
+        let dx = i - S_lpkx;
+        let dz = j - S_lpkz;
+        let dist = Math.sqrt(dx * dx + dz * dz);
+        if (dist < 1) {
+          score = S_lpky;
+          deno = 1;
+          break;
         }
+        let a = cal_coef(dist);
+        deno += a;
+        score += S_lpky * a;
+      }
+      if (deno > 0) {
+        S[i][j] = score / deno;
       }
     }
   }
