@@ -107,7 +107,7 @@ const params = {
     ];
     need_update = true;
   },
-  ground_6: function() {
+  ground_5: function() {
     S_lp = [
       [0.25, 0.2, 0.25],
       [0.25, 0.1, 0.37],
@@ -133,7 +133,7 @@ const params = {
     ];
     need_update = true;
   },
-  ground_5: function() {
+  ground_6: function() {
     S_lp = [
       [0.25, 0.25, 0.25],
       [0.25, 0.25, 0.75],
