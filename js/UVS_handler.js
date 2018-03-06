@@ -52,8 +52,8 @@ function init_S() {
     let j_min = (S_lp2_scale <= scene_res / 2 ? 0 : S_lp2_scale * 2 - scene_res);
     let j_max = (S_lp2_scale >= scene_res / 2 ? scene_res : S_lp2_scale * 2);
 
-    for (i = 0; i < scene_res; i++) {
-      for (j = 0; j < scene_res; j++) {
+    for (i = 1; i < scene_res - 1; i++) {
+      for (j = 1; j < scene_res - 1; j++) {
         if (i > i_min && i < i_max && j > j_min && j < j_max) {
           let k1 = 0;
           let k2 = 0;
@@ -70,9 +70,6 @@ function init_S() {
         }
       }
     }
-  }
-  for (let i = 0; i < scene_res / 4; i++) {
-    filtre(S);
   }
 }
 
