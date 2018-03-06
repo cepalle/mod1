@@ -10,10 +10,7 @@ function animate() {
     need_update = false;
   }
 
-  if (run) {
-    scene_update();
-  }
-
+  scene_update();
   renderer.render(scene, camera);
   stats.end();
 };

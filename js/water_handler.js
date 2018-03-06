@@ -1,7 +1,7 @@
 function wave_update() {
   for (let i = 0; i < scene_res; i++) {
-    U[0][i] = scene_res * 0.2;
-    V[0][i] = 0;
+    U[i][scene_res - 1] = scene_res * 0.2;
+    V[i][scene_res - 1] = 0;
   }
 }
 

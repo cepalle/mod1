@@ -48,7 +48,6 @@ let wave = false;
 let rain = false;
 let rising = false;
 let leak = false;
-let run = false;
 let need_update = true;
 
 // UVS matrice for calcul water
@@ -58,42 +57,71 @@ const V = [];
 const S = [];
 
 // S description
-let S_lp = [
-  [0.25, 0.35, 0.25],
-  [0.25, 0.18, 0.37],
-  [0.25, 0.18, 0.50],
-  [0.25, 0.18, 0.62],
-  [0.25, 0.35, 0.75],
-
-  [0.37, 0.35, 0.25],
-  [0.37, 0.35, 0.75],
-
-  [0.50, 0.35, 0.25],
-  [0.50, 0.35, 0.75],
-
-  [0.62, 0.35, 0.25],
-  [0.62, 0.35, 0.75],
-
-  [0.75, 0.35, 0.25],
-  [0.75, 0.35, 0.37],
-  [0.75, 0.35, 0.50],
-  [0.75, 0.35, 0.62],
-  [0.75, 0.35, 0.75],
-  [0.50, 0.00, 0.50],
-];
+let S_lp = [];
 
 // Gui
 const params = {
   resolution: 128,
+  ground_1: function() {
+    S_lp = [
+      [0.5, 0.3, 0.5],
+    ];
+    need_update = true;
+  },
+  ground_2: function() {
+    S_lp = [
+      [0.5, 0.3, 0.5],
+      [0.75, 0.005, 0.5],
+      [0.75, 0.20, 0.75],
+    ];
+    need_update = true;
+  },
+  ground_3: function() {
+    S_lp = [
+      [0.2, 0.1, 0.2],
+      [0.4, 0.0, 0.2],
+      [0.6, 0.1, 0.2],
+      [0.8, 0.01, 0.2],
+      [0.2, 0.025, 0.4],
+      [0.4, 0.1, 0.4],
+      [0.6, 0.01, 0.4],
+      [0.8, 0.1, 0.4],
+      [0.2, 0.1, 0.6],
+      [0.4, 0.0, 0.6],
+      [0.6, 0.1, 0.6],
+      [0.8, 0.01, 0.6],
+    ];
+    need_update = true;
+  },
   wave: false,
   rain: false,
   rising: false,
   leak: false,
-  start: function() {
-    run = true;
-  },
-  stop: function() {
-    run = false;
+  ground_4: function() {
+    S_lp = [
+      [0.25, 0.35, 0.25],
+      [0.25, 0.18, 0.37],
+      [0.25, 0.18, 0.50],
+      [0.25, 0.18, 0.62],
+      [0.25, 0.35, 0.75],
+
+      [0.37, 0.35, 0.25],
+      [0.37, 0.35, 0.75],
+
+      [0.50, 0.35, 0.25],
+      [0.50, 0.35, 0.75],
+
+      [0.62, 0.35, 0.25],
+      [0.62, 0.35, 0.75],
+
+      [0.75, 0.35, 0.25],
+      [0.75, 0.35, 0.37],
+      [0.75, 0.35, 0.50],
+      [0.75, 0.35, 0.62],
+      [0.75, 0.35, 0.75],
+      [0.50, 0.00, 0.50],
+    ];
+    need_update = true;
   },
   restart: function() {
     need_update = true;
@@ -106,6 +134,10 @@ gui.add(params, 'resolution').min(128).max(256).step(16).onFinishChange(function
   scene_res = params.resolution;
   need_update = true;
 });
+gui.add(params, 'ground_1');
+gui.add(params, 'ground_2');
+gui.add(params, 'ground_3');
+gui.add(params, 'ground_4');
 gui.add(params, 'wave').onFinishChange(function() {
   wave = params.wave;
 });
@@ -118,6 +150,4 @@ gui.add(params, 'rising').onFinishChange(function() {
 gui.add(params, 'leak').onFinishChange(function() {
   leak = params.leak;
 });
-gui.add(params, 'start');
-gui.add(params, 'stop');
 gui.add(params, 'restart');

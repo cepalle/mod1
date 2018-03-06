@@ -3,7 +3,7 @@ function set_input_S() {
   S_lp = text.split("\n").map(test_split =>
     test_split.split(' ').map(flt_txt =>
       parseFloat(flt_txt)
-    ).map(x => x / 10000).map(flt => {
+    ).map(flt => {
       if (flt < 0) {
         return 0;
       } else if (flt > 1) {
