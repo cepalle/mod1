@@ -126,7 +126,7 @@ const params = {
 // Gui construction
 const gui = new dat.GUI();
 
-gui.add(params, 'resolution').min(128).max(256).step(16).onFinishChange(function() {
+gui.add(params, 'resolution').min(128).max(512).step(16).onFinishChange(function() {
   scene_res = params.resolution;
   need_update = true;
 });
