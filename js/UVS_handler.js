@@ -1,6 +1,5 @@
-function set_input_S() {
-  let text = document.getElementById("input_S_lp").value;
-  S_lp = text.split("\n").map(test_split =>
+function set_S(txt) {
+  S_lp = txt.split("\n").map(test_split =>
     test_split.split(' ').map(flt_txt =>
       parseFloat(flt_txt)
     ).map(flt => {
@@ -14,6 +13,11 @@ function set_input_S() {
     })
   ).filter(coord => coord.length >= 3);
   need_update = true;
+}
+
+function set_input_S() {
+  let text = document.getElementById("input_S_lp").value;
+  set_S(text);
 }
 
 function cal_coef(a) {

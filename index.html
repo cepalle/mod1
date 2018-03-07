@@ -42,10 +42,11 @@
 	<script src="js/main.js"></script>
 	<div class="container">
 		<div class="row">
-			<div class="col-3">
+			<div class="col-4">
 				<p>
-					Here you can change the coordinates to generate the ground.<br/> Each coordinate is between 0 and 1.
+					Here you can change coordinates to generate the ground.<br/> Each coordinate is between 0 and 1.<br/>You can write coordinates in the input or load a file.
 				</p>
+				<input type="file" id="file_input" />
 			</div>
 			<div class="col-2">
 				<p>Example:<br/>0.25 0.35 0.25<br/>0.25 0.18 0.37<br/>0.25 0.18 0.50<br/>0.25 0.18 0.62<br/>0.25 0.35 0.75<br/> 0.37 0.35 0.25<br/>0.37 0.35 0.75<br/>0.50 0.35 0.25<br/>0.50 0.35 0.75<br/>0.62 0.35 0.25<br/> 0.62 0.35 0.75<br/>0.75 0.35 0.25<br/>0.75
@@ -56,10 +57,21 @@
 				<textarea id="input_S_lp" rows=18 cols="20"></textarea>
 			</div>
 			<div class="col-1">
-				<button onclick="set_input_S()" class="btn btn-secondary">Load</button>
+				<button onclick="set_input_S()" class="btn btn-secondary">Load input</button>
 			</div>
 		</div>
 	</div>
+	<script>
+		function handleFileSelect(evt) {
+			var file = evt.target.files[0];
+			var reader = new FileReader();
+			reader.onload = (f) => {
+				set_S(f.target.result);
+			};
+			reader.readAsText(file);
+		}
+		document.getElementById('file_input').addEventListener('change', handleFileSelect, false);
+	</script>
 </body>
 
 </html>
