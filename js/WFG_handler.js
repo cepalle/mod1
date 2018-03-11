@@ -1,5 +1,3 @@
-// EXTERN //
-
 let g_WFG_W;            // Water description
 let g_WFG_G;            // Ground description
 let g_WFG_G_lp = [];    // list of points g_WFG_G description
@@ -93,7 +91,7 @@ function WFG_W_update() {
     }
 }
 
-// INTERN //
+// --- //
 
 let F;                  // Flot description
 let W_cp;

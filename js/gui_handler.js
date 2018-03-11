@@ -1,8 +1,6 @@
-// EXTERN //
-
 let g_gui_params;
 
-// INTERN //
+// --- //
 
 g_gui_params = {
     resolution: 192,

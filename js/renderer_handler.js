@@ -1,5 +1,3 @@
-// EXTERN //
-
 let g_renderer_need_update = true;
 
 
@@ -24,7 +22,7 @@ function render_animate() {
     g_stats.end();
 }
 
-// INTERN //
+// --- //
 
 let scene;
 let geometry_water;

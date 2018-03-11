@@ -1,5 +1,3 @@
-// EXTERN //
-
 function M_to_geometry_init(M, geo) {
     const positions = [];
     const normals = [];
@@ -22,7 +20,7 @@ function M_to_geometry(geometry, M) {
     geometry.attributes.normal.needsUpdate = true;
 }
 
-// INTERN //
+// --- //
 
 const pA = new THREE.Vector3();
 const pB = new THREE.Vector3();

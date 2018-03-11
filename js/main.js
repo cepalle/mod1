@@ -1,3 +1,1 @@
-// INTERN //
-
 render_animate();
