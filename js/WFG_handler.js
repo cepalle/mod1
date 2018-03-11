@@ -31,7 +31,7 @@ function cal_coef(a) {
     return 1 / (a * a * a);
 }
 
-function init_S() {
+function G_init() {
     for (let i = 1; i < g_gui_params.resolution - 1; i++) {
         for (let j = 1; j < g_gui_params.resolution - 1; j++) {
             let deno = 0;
@@ -64,10 +64,10 @@ function init_S() {
 }
 
 function WFG_init() {
-        g_W = [];
-        g_W = [];
-        g_F = [];
-        g_G = [];
+    g_W = [];
+    g_W_cp = [];
+    g_F = [];
+    g_G = [];
 
     for (let i = 0; i < g_gui_params.resolution; i++) {
         g_W.push([]);
@@ -81,7 +81,7 @@ function WFG_init() {
             g_G[i][j] = 0;
         }
     }
-    init_S();
+    G_init();
 }
 
 function wave_update() {
@@ -193,8 +193,8 @@ function water_update() {
             }
         }
     }
-    for (i = 0; i < g_gui_params.resolution; i++) {
-        for (j = 0; j < g_gui_params.resolution; j++) {
+    for (let i = 0; i < g_gui_params.resolution; i++) {
+        for (let j = 0; j < g_gui_params.resolution; j++) {
             g_W[i][j] = g_W_cp[i][j];
         }
     }

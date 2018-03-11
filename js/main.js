@@ -1,3 +1,1 @@
-function main() {
-    render_animate();
-}
+render_animate();

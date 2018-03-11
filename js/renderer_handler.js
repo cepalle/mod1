@@ -1,8 +1,6 @@
-let g_renderer_renderer;
-let g_renderer_scene;
-let g_renderer_camera;
-let g_renderer_controls;
 let g_renderer_need_update = true;
+
+let scene;
 let geometry_water;
 let geometry_sol;
 
@@ -20,26 +18,23 @@ const material_sol = new THREE.MeshLambertMaterial({
     side: THREE.DoubleSide,
 });
 
-// g_renderer_renderer
-g_renderer_renderer = new THREE.WebGLRenderer();
-g_renderer_renderer.setPixelRatio(window.devicePixelRatio);
-g_renderer_renderer.setSize(window.innerWidth, window.innerHeight * wdim);
-document.body.appendChild(g_renderer_renderer.domElement);
+const renderer = new THREE.WebGLRenderer();
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(window.innerWidth, window.innerHeight * wdim);
+document.body.appendChild(renderer.domElement);
 
-// g_renderer_camera
-g_renderer_camera = new THREE.PerspectiveCamera(45, window.innerWidth / (window.innerHeight * wdim), 1, 2000);
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / (window.innerHeight * wdim), 1, 2000);
 
 function onWindowResize() {
-    g_renderer_camera.aspect = window.innerWidth / (window.innerHeight * wdim);
-    g_renderer_camera.updateProjectionMatrix();
-    g_renderer_renderer.setSize(window.innerWidth, window.innerHeight * wdim);
+    camera.aspect = window.innerWidth / (window.innerHeight * wdim);
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight * wdim);
 }
 
 window.addEventListener('resize', onWindowResize, false);
 
-// g_renderer_controls
-g_renderer_controls = new THREE.OrbitControls(g_renderer_camera, g_renderer_renderer.domElement);
-g_renderer_controls.enableZoom = true;
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableZoom = true;
 
 
 function init_geo(M, geo) {
@@ -58,18 +53,18 @@ function init_geo(M, geo) {
 function scene_init() {
     WFG_init();
 
-    g_renderer_scene = new THREE.Scene();
-    g_renderer_scene.add(light1);
+    scene = new THREE.Scene();
+    scene.add(light1);
     geometry_water = new THREE.BufferGeometry();
     geometry_sol = new THREE.BufferGeometry();
 
     init_geo(g_W, geometry_water);
     const mesh_water = new THREE.Mesh(geometry_water, material_water);
-    g_renderer_scene.add(mesh_water);
+    scene.add(mesh_water);
 
     init_geo(g_G, geometry_sol);
     const mesh_sol = new THREE.Mesh(geometry_sol, material_sol);
-    g_renderer_scene.add(mesh_sol);
+    scene.add(mesh_sol);
 }
 
 function geometry_upadte(geometry, M) {
@@ -104,17 +99,17 @@ function render_animate() {
     requestAnimationFrame(render_animate);
 
     if (g_renderer_need_update) {
-        g_renderer_camera.position.set(
+        camera.position.set(
             g_gui_params.resolution * 1.5,
             g_gui_params.resolution * 1.5,
             g_gui_params.resolution * 1.5
         );
-        g_renderer_controls.update();
+        controls.update();
         scene_init();
         g_renderer_need_update = false;
     }
 
     renderer_scene_update();
-    g_renderer_renderer.render(g_renderer_scene, g_renderer_camera);
+    renderer.render(scene, camera);
     g_stats.end();
 }
