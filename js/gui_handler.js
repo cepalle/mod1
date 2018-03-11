@@ -1,11 +1,13 @@
-// Gui g_gui_params
-const g_gui_params = {
+let g_gui_params;
+
+
+g_gui_params = {
     resolution: 128,
     ground_1: function () {
         g_G_lp = [
             [0.5, 0.3, 0.5],
         ];
-        g_need_update = true;
+        g_renderer_need_update = true;
     },
     ground_2: function () {
         g_G_lp = [
@@ -13,7 +15,7 @@ const g_gui_params = {
             [0.75, 0.005, 0.5],
             [0.75, 0.20, 0.75],
         ];
-        g_need_update = true;
+        g_renderer_need_update = true;
     },
     ground_3: function () {
         g_G_lp = [
@@ -30,7 +32,7 @@ const g_gui_params = {
             [0.6, 0.1, 0.6],
             [0.8, 0.01, 0.6],
         ];
-        g_need_update = true;
+        g_renderer_need_update = true;
     },
     ground_4: function () {
         g_G_lp = [
@@ -40,7 +42,7 @@ const g_gui_params = {
             [0.75, 0.25, 0.25],
             [0.75, 0.25, 0.75],
         ];
-        g_need_update = true;
+        g_renderer_need_update = true;
     },
     ground_5: function () {
         g_G_lp = [
@@ -66,7 +68,7 @@ const g_gui_params = {
             [0.75, 0.2, 0.75],
             [0.50, 0.0, 0.50],
         ];
-        g_need_update = true;
+        g_renderer_need_update = true;
     },
     ground_6: function () {
         g_G_lp = [
@@ -96,7 +98,7 @@ const g_gui_params = {
             [0.75, 0.225, 0.63],
             [0.50, 0.25, 0.25],
         ];
-        g_need_update = true;
+        g_renderer_need_update = true;
     },
     wave: false,
     wave_height: 0.1,
@@ -107,7 +109,7 @@ const g_gui_params = {
     leak: false,
     leak_speed: 0.1,
     restart: function () {
-        g_need_update = true;
+        g_renderer_need_update = true;
     }
 };
 
@@ -115,7 +117,7 @@ const g_gui_params = {
 const gui = new dat.GUI();
 
 gui.add(g_gui_params, 'resolution').min(128).max(512).step(16).onFinishChange(function () {
-    g_need_update = true;
+    g_renderer_need_update = true;
 });
 
 const ground_panel = gui.addFolder('Ground');

@@ -4,18 +4,18 @@ const pC = new THREE.Vector3();
 const cb = new THREE.Vector3();
 const ab = new THREE.Vector3();
 
-function add_pos(positions, k, lpos) {
-    for (let i = 0; i < lpos.length; i++) {
-        positions[k++] = lpos[i][0];
-        positions[k++] = lpos[i][1];
-        positions[k++] = lpos[i][2];
+function add_pos(positions, k, lp) {
+    for (let i = 0; i < lp.length; i++) {
+        positions[k++] = lp[i][0];
+        positions[k++] = lp[i][1];
+        positions[k++] = lp[i][2];
     }
 }
 
-function add_norm(normals, h, lpos) {
-    pA.set(lpos[0][0], lpos[0][1], lpos[0][2]);
-    pB.set(lpos[1][0], lpos[1][1], lpos[1][2]);
-    pC.set(lpos[2][0], lpos[2][1], lpos[2][2]);
+function add_norm(normals, h, lp) {
+    pA.set(lp[0][0], lp[0][1], lp[0][2]);
+    pB.set(lp[1][0], lp[1][1], lp[1][2]);
+    pC.set(lp[2][0], lp[2][1], lp[2][2]);
     cb.subVectors(pC, pB);
     ab.subVectors(pA, pB);
     cb.cross(ab);
@@ -34,7 +34,7 @@ function add_norm(normals, h, lpos) {
     normals[h++] = nz * 32767;
 }
 
-function positions_normals_update(positions, normals, M) {
+function M_to_positions_normals(positions, normals, M) {
     let k = 0;
     let h = 0;
     for (let i = 0; i < g_gui_params.resolution - 1; i++) {
