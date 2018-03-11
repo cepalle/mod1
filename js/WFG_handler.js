@@ -97,6 +97,7 @@ function WFG_W_update() {
 
 let F;                  // Flot description
 let W_cp;
+const PI = Math.PI;
 
 
 function cal_coef(a) {
