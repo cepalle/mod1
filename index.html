@@ -15,15 +15,6 @@
             width: 100%;
             height: 100%
         }
-
-        info {
-            position: absolute;
-            top: 10px;
-            width: 100%;
-            text-align: center;
-            z-index: 100;
-            display: block;
-        }
     </style>
 </head>
 
@@ -57,7 +48,9 @@
             </p>
         </div>
         <div class="col-3">
-            <textarea id="input_S_lp" rows=18 cols="20"/>
+            <textarea title="input_G_lp" id="input_G_lp" rows=18 cols="20">
+0.25 0.18 0.37
+0.50 0.35 0.25</textarea>
         </div>
         <div class="col-1">
             <button onclick="WFG_textarea_to_G_lp()" class="btn btn-secondary">Load input</button>

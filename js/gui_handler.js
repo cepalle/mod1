@@ -5,7 +5,7 @@ let g_gui_params;
 // INTERN //
 
 g_gui_params = {
-    resolution: 128,
+    resolution: 192,
     ground_1: function () {
         g_WFG_G_lp = [
             [0.5, 0.3, 0.5],
@@ -118,7 +118,7 @@ g_gui_params = {
 
 const gui = new dat.GUI();
 
-gui.add(g_gui_params, 'resolution').min(128).max(512).step(16).onFinishChange(function () {
+gui.add(g_gui_params, 'resolution').min(128).max(256).step(16).onFinishChange(function () {
     g_renderer_need_update = true;
 });
 

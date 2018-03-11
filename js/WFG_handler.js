@@ -17,12 +17,12 @@ function WFG_txt_to_G_lp(txt) {
                 return flt;
             }
         })
-    ).filter(coord => coord.length >= 3);
+    ).filter(coord => coord.length === 3);
     g_renderer_need_update = true;
 }
 
 function WFG_textarea_to_G_lp() {
-    let text = document.getElementById("input_S_lp").value;
+    let text = document.getElementById("input_G_lp").value;
     WFG_txt_to_G_lp(text);
 }
 
