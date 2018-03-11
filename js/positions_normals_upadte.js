@@ -34,7 +34,7 @@ function add_norm(normals, h, lpos) {
     normals[h++] = nz * 32767;
 }
 
-function positions_normals_upadte(positions, normals, M) {
+function positions_normals_update(positions, normals, M) {
     let k = 0;
     let h = 0;
     for (let i = 0; i < g_gui_params.resolution - 1; i++) {

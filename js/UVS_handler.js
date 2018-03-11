@@ -1,3 +1,9 @@
+// Water, Flot, Groud matrice description
+const g_W = [];
+const g_W_cp = [];
+const g_F = [];
+const g_G = [];
+
 function set_S(txt) {
     g_G_lp = txt.split("\n").map(test_split =>
         test_split.split(' ').map(flt_txt =>

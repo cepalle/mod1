@@ -78,13 +78,13 @@ function cal_dvs(i, j, ii, jj) {
 
 function cal_v(v_old, dv) {
     v_old += dv;
-    v_old *= s;
+    v_old *= 0.99;
     return v_old;
 }
 
 function water_update() {
-    for (i = 0; i < g_gui_params.resolution; i++) {
-        for (j = 0; j < g_gui_params.resolution; j++) {
+    for (let i = 0; i < g_gui_params.resolution; i++) {
+        for (let j = 0; j < g_gui_params.resolution; j++) {
             let dv = 0;
             if (g_W[i][j] > g_G[i][j]) {
                 dv += cal_dvu(i, j, i - 1, j, g_W, g_G) / 4;

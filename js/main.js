@@ -3,18 +3,18 @@ const stats = new Stats();
 stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
 document.body.appendChild(stats.dom);
 
-// Threejs
+// Three.js
 const renderer = new THREE.WebGLRenderer();
 renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(window.innerWidth, window.innerHeight * wdim);
+renderer.setSize(window.innerWidth, window.innerHeight * g_wdim);
 document.body.appendChild(renderer.domElement);
 
-const camera = new THREE.PerspectiveCamera(45, window.innerWidth / (window.innerHeight * wdim), 1, 2000);
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / (window.innerHeight * g_wdim), 1, 2000);
 
 function onWindowResize() {
-    camera.aspect = window.innerWidth / (window.innerHeight * wdim);
+    camera.aspect = window.innerWidth / (window.innerHeight * g_wdim);
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight * wdim);
+    renderer.setSize(window.innerWidth, window.innerHeight * g_wdim);
 }
 
 window.addEventListener('resize', onWindowResize, false);
@@ -38,6 +38,6 @@ function animate() {
     scene_update();
     renderer.render(g_scene, camera);
     stats.end();
-};
+}
 
 animate();

@@ -10,11 +10,17 @@ const material_sol = new THREE.MeshLambertMaterial({
     side: THREE.DoubleSide,
 });
 
+// Three.js g_variable
+let g_scene;
+let g_geometry_water;
+let g_geometry_sol;
+
+
 function init_geo(M, geo) {
     const positions = [];
     const normals = [];
 
-    positions_normals_upadte(positions, normals, M);
+    positions_normals_update(positions, normals, M);
 
     const positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
     const normalAttribute = new THREE.Int16BufferAttribute(normals, 3);
@@ -44,7 +50,7 @@ function geometry_upadte(geometry, M) {
     const positions = geometry.attributes.position.array;
     const normals = geometry.attributes.normal.array;
 
-    positions_normals_upadte(positions, normals, M);
+    positions_normals_update(positions, normals, M);
     geometry.attributes.position.needsUpdate = true;
     geometry.attributes.normal.needsUpdate = true;
 }
