@@ -1,2 +1,3 @@
-// Constants
+// EXTERN //
+
 const PI = Math.PI;

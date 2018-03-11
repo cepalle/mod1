@@ -1,5 +1,8 @@
+// EXTERN //
+
 let g_gui_params;
 
+// INTERN //
 
 g_gui_params = {
     resolution: 128,
@@ -113,7 +116,6 @@ g_gui_params = {
     }
 };
 
-// Gui construction
 const gui = new dat.GUI();
 
 gui.add(g_gui_params, 'resolution').min(128).max(512).step(16).onFinishChange(function () {

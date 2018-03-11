@@ -60,7 +60,7 @@
             <textarea id="input_S_lp" rows=18 cols="20"/>
         </div>
         <div class="col-1">
-            <button onclick="set_input_S()" class="btn btn-secondary">Load input</button>
+            <button onclick="WFG_textarea_to_G_lp()" class="btn btn-secondary">Load input</button>
         </div>
     </div>
 </div>
@@ -69,7 +69,7 @@
         let file = evt.target.files[0];
         let reader = new FileReader();
         reader.onload = (f) => {
-            set_S(f.target.result);
+            WFG_txt_to_G_lp(f.target.result);
         };
         reader.readAsText(file);
     }

@@ -1,3 +1,29 @@
+// EXTERN //
+
+function M_to_geometry_init(M, geo) {
+    const positions = [];
+    const normals = [];
+
+    M_to_positions_normals(positions, normals, M);
+
+    const positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
+    const normalAttribute = new THREE.Int16BufferAttribute(normals, 3);
+    normalAttribute.normalized = true;
+    geo.addAttribute('position', positionAttribute);
+    geo.addAttribute('normal', normalAttribute);
+}
+
+function M_to_geometry(geometry, M) {
+    const positions = geometry.attributes.position.array;
+    const normals = geometry.attributes.normal.array;
+
+    M_to_positions_normals(positions, normals, M);
+    geometry.attributes.position.needsUpdate = true;
+    geometry.attributes.normal.needsUpdate = true;
+}
+
+// INTERN //
+
 const pA = new THREE.Vector3();
 const pB = new THREE.Vector3();
 const pC = new THREE.Vector3();
@@ -32,7 +58,7 @@ function add_norm(normals, h, lp) {
     normals[h++] = nz * 32767;
     normals[h++] = nx * 32767;
     normals[h++] = ny * 32767;
-    normals[h++] = nz * 32767;
+    normals[h] = nz * 32767;
 }
 
 function M_to_positions_normals(positions, normals, M) {
@@ -60,26 +86,4 @@ function M_to_positions_normals(positions, normals, M) {
             h += 9;
         }
     }
-}
-
-function M_to_geometry_init(M, geo) {
-    const positions = [];
-    const normals = [];
-
-    M_to_positions_normals(positions, normals, M);
-
-    const positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
-    const normalAttribute = new THREE.Int16BufferAttribute(normals, 3);
-    normalAttribute.normalized = true;
-    geo.addAttribute('position', positionAttribute);
-    geo.addAttribute('normal', normalAttribute);
-}
-
-function M_to_geometry(geometry, M) {
-    const positions = geometry.attributes.position.array;
-    const normals = geometry.attributes.normal.array;
-
-    M_to_positions_normals(positions, normals, M);
-    geometry.attributes.position.needsUpdate = true;
-    geometry.attributes.normal.needsUpdate = true;
 }
