@@ -31,8 +31,8 @@ function cal_coef(a) {
 }
 
 function init_S() {
-    for (i = 1; i < g_gui_params.resolution - 1; i++) {
-        for (j = 1; j < g_gui_params.resolution - 1; j++) {
+    for (let i = 1; i < g_gui_params.resolution - 1; i++) {
+        for (let j = 1; j < g_gui_params.resolution - 1; j++) {
             let deno = 0;
             let score = 0;
             deno += cal_coef(i);
@@ -76,7 +76,7 @@ function init_UVS() {
         g_G.pop();
     }
 
-    for (i = 0; i < g_gui_params.resolution; i++) {
+    for (let i = 0; i < g_gui_params.resolution; i++) {
         g_W.push([]);
         g_W_cp.push([]);
         g_F.push([]);
