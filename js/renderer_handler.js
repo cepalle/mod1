@@ -1,9 +1,9 @@
 let g_renderer_need_update = true;
 
+
 let scene;
 let geometry_water;
 let geometry_sol;
-
 
 const wdim = 0.9;
 const light1 = new THREE.DirectionalLight(0xffffff, 1);
@@ -37,19 +37,6 @@ const controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableZoom = true;
 
 
-function init_geo(M, geo) {
-    const positions = [];
-    const normals = [];
-
-    M_to_positions_normals(positions, normals, M);
-
-    const positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
-    const normalAttribute = new THREE.Int16BufferAttribute(normals, 3);
-    normalAttribute.normalized = true;
-    geo.addAttribute('position', positionAttribute);
-    geo.addAttribute('normal', normalAttribute);
-}
-
 function scene_init() {
     WFG_init();
 
@@ -58,25 +45,16 @@ function scene_init() {
     geometry_water = new THREE.BufferGeometry();
     geometry_sol = new THREE.BufferGeometry();
 
-    init_geo(g_W, geometry_water);
+    M_to_geometry_init(g_WFG_W, geometry_water);
     const mesh_water = new THREE.Mesh(geometry_water, material_water);
     scene.add(mesh_water);
 
-    init_geo(g_G, geometry_sol);
+    M_to_geometry_init(g_WFG_G, geometry_sol);
     const mesh_sol = new THREE.Mesh(geometry_sol, material_sol);
     scene.add(mesh_sol);
 }
 
-function geometry_upadte(geometry, M) {
-    const positions = geometry.attributes.position.array;
-    const normals = geometry.attributes.normal.array;
-
-    M_to_positions_normals(positions, normals, M);
-    geometry.attributes.position.needsUpdate = true;
-    geometry.attributes.normal.needsUpdate = true;
-}
-
-function renderer_scene_update() {
+function scene_update() {
     if (g_gui_params.wave) {
         wave_update();
     }
@@ -90,7 +68,7 @@ function renderer_scene_update() {
         leak_update();
     }
     water_update();
-    geometry_upadte(geometry_water, g_W);
+    M_to_geometry(geometry_water, g_WFG_W);
 }
 
 function render_animate() {
@@ -109,7 +87,7 @@ function render_animate() {
         g_renderer_need_update = false;
     }
 
-    renderer_scene_update();
+    scene_update();
     renderer.render(scene, camera);
     g_stats.end();
 }

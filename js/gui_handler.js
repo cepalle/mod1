@@ -4,13 +4,13 @@ let g_gui_params;
 g_gui_params = {
     resolution: 128,
     ground_1: function () {
-        g_G_lp = [
+        g_WFG_G_lp = [
             [0.5, 0.3, 0.5],
         ];
         g_renderer_need_update = true;
     },
     ground_2: function () {
-        g_G_lp = [
+        g_WFG_G_lp = [
             [0.5, 0.3, 0.5],
             [0.75, 0.005, 0.5],
             [0.75, 0.20, 0.75],
@@ -18,7 +18,7 @@ g_gui_params = {
         g_renderer_need_update = true;
     },
     ground_3: function () {
-        g_G_lp = [
+        g_WFG_G_lp = [
             [0.2, 0.1, 0.2],
             [0.4, 0.0, 0.2],
             [0.6, 0.1, 0.2],
@@ -35,7 +35,7 @@ g_gui_params = {
         g_renderer_need_update = true;
     },
     ground_4: function () {
-        g_G_lp = [
+        g_WFG_G_lp = [
             [0.50, 0.1, 0.50],
             [0.25, 0.25, 0.25],
             [0.25, 0.25, 0.75],
@@ -45,7 +45,7 @@ g_gui_params = {
         g_renderer_need_update = true;
     },
     ground_5: function () {
-        g_G_lp = [
+        g_WFG_G_lp = [
             [0.25, 0.2, 0.25],
             [0.25, 0.1, 0.37],
             [0.25, 0.1, 0.50],
@@ -71,7 +71,7 @@ g_gui_params = {
         g_renderer_need_update = true;
     },
     ground_6: function () {
-        g_G_lp = [
+        g_WFG_G_lp = [
             [0.25, 0.25, 0.25],
             [0.25, 0.25, 0.75],
             [0.75, 0.20, 0.75],
