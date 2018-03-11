@@ -12,7 +12,7 @@ function set_S(txt) {
             }
         })
     ).filter(coord => coord.length >= 3);
-    need_update = true;
+    g_need_update = true;
 }
 
 function set_input_S() {
@@ -25,18 +25,18 @@ function cal_coef(a) {
 }
 
 function init_S() {
-    for (i = 1; i < scene_res - 1; i++) {
-        for (j = 1; j < scene_res - 1; j++) {
+    for (i = 1; i < g_gui_params.resolution - 1; i++) {
+        for (j = 1; j < g_gui_params.resolution - 1; j++) {
             let deno = 0;
             let score = 0;
             deno += cal_coef(i);
-            deno += cal_coef(scene_res - i);
+            deno += cal_coef(g_gui_params.resolution - i);
             deno += cal_coef(j);
-            deno += cal_coef(scene_res - j);
+            deno += cal_coef(g_gui_params.resolution - j);
             for (let k = 0; k < S_lp.length; k++) {
-                let S_lpkx = S_lp[k][0] * scene_res;
-                let S_lpky = S_lp[k][1] * scene_res;
-                let S_lpkz = S_lp[k][2] * scene_res;
+                let S_lpkx = S_lp[k][0] * g_gui_params.resolution;
+                let S_lpky = S_lp[k][1] * g_gui_params.resolution;
+                let S_lpkz = S_lp[k][2] * g_gui_params.resolution;
                 let dx = i - S_lpkx;
                 let dz = j - S_lpkz;
                 let dist = Math.sqrt(dx * dx + dz * dz);
@@ -70,12 +70,12 @@ function init_UVS() {
         S.pop();
     }
 
-    for (i = 0; i < scene_res; i++) {
+    for (i = 0; i < g_gui_params.resolution; i++) {
         U.push([]);
         U_cp.push([]);
         V.push([]);
         S.push([]);
-        for (j = 0; j < scene_res; j++) {
+        for (j = 0; j < g_gui_params.resolution; j++) {
             U[i][j] = -1;
             U_cp[i][j] = -1;
             V[i][j] = 0;

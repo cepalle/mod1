@@ -1,14 +1,14 @@
 function wave_update() {
-    for (let i = 0; i < scene_res; i++) {
-        U[i][scene_res - 1] = g_params.wave_height * g_params.resolution;
-        V[i][scene_res - 1] = 0;
+    for (let i = 0; i < g_gui_params.resolution; i++) {
+        U[i][g_gui_params.resolution - 1] = g_gui_params.wave_height * g_gui_params.resolution;
+        V[i][g_gui_params.resolution - 1] = 0;
     }
 }
 
 function rain_update() {
-    for (let i = 0; i < scene_res; i++) {
-        for (let j = 0; j < scene_res; j++) {
-            if (Math.random() < g_params.rain_speed) {
+    for (let i = 0; i < g_gui_params.resolution; i++) {
+        for (let j = 0; j < g_gui_params.resolution; j++) {
+            if (Math.random() < g_gui_params.rain_speed) {
                 if (U[i][j] > S[i][j]) {
                     U[i][j] += 0.1;
                 } else {
@@ -20,11 +20,12 @@ function rain_update() {
 }
 
 function rising_update() {
-    for (let i = 0; i < scene_res; i++) {
-        for (let j = 0; j < scene_res; j++) {
+    for (let i = 0; i < g_gui_params.resolution; i++) {
+        for (let j = 0; j < g_gui_params.resolution; j++) {
             if (U[i][j] > S[i][j]) {
-                U[i][j] += rising_speed;
-            } else if (S[i][j] < 2) {
+                U[i][j] += g_gui_params.rising_speed;
+            } else if (S[i][j] < 2 && (i === 0 || j === 0 ||
+                    i === g_gui_params.resolution - 1 || j === g_gui_params.resolution - 1)) {
                 U[i][j] = 2;
             }
         }
@@ -32,10 +33,10 @@ function rising_update() {
 }
 
 function leak_update() {
-    for (let i = 0; i < scene_res; i++) {
-        for (let j = 0; j < scene_res; j++) {
+    for (let i = 0; i < g_gui_params.resolution; i++) {
+        for (let j = 0; j < g_gui_params.resolution; j++) {
             if (U[i][j] > S[i][j]) {
-                U[i][j] -= leak_speed;
+                U[i][j] -= g_gui_params.leak_speed;
                 U[i][j] = (U[i][j] > S[i][j] ? U[i][j] : -1);
             }
         }
@@ -43,7 +44,7 @@ function leak_update() {
 }
 
 function cal_dvu(i, j, ii, jj) {
-    if (ii < 0 || ii >= scene_res || jj < 0 || jj >= scene_res) {
+    if (ii < 0 || ii >= g_gui_params.resolution || jj < 0 || jj >= g_gui_params.resolution) {
         return 0;
     }
     if (S[ii][jj] > U[ii][jj]) {
@@ -58,7 +59,7 @@ function cal_dvu(i, j, ii, jj) {
 }
 
 function cal_dvs(i, j, ii, jj) {
-    if (ii < 0 || ii >= scene_res || jj < 0 || jj >= scene_res) {
+    if (ii < 0 || ii >= g_gui_params.resolution || jj < 0 || jj >= g_gui_params.resolution) {
         return 0;
     }
     if (S[ii][jj] > U[ii][jj]) {
@@ -82,8 +83,8 @@ function cal_v(v_old, dv) {
 }
 
 function water_update() {
-    for (i = 0; i < scene_res; i++) {
-        for (j = 0; j < scene_res; j++) {
+    for (i = 0; i < g_gui_params.resolution; i++) {
+        for (j = 0; j < g_gui_params.resolution; j++) {
             let dv = 0;
             if (U[i][j] > S[i][j]) {
                 dv += cal_dvu(i, j, i - 1, j, U, S) / 4;
@@ -106,8 +107,8 @@ function water_update() {
             }
         }
     }
-    for (i = 0; i < scene_res; i++) {
-        for (j = 0; j < scene_res; j++) {
+    for (i = 0; i < g_gui_params.resolution; i++) {
+        for (j = 0; j < g_gui_params.resolution; j++) {
             U[i][j] = U_cp[i][j];
         }
     }

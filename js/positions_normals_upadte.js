@@ -37,10 +37,10 @@ function add_norm(normals, h, lpos) {
 function positions_normals_upadte(positions, normals, M) {
     let k = 0;
     let h = 0;
-    for (let i = 0; i < scene_res - 1; i++) {
-        for (let j = 0; j < scene_res - 1; j++) {
-            let i_eq = i - scene_res / 2;
-            let j_eq = j - scene_res / 2;
+    for (let i = 0; i < g_gui_params.resolution - 1; i++) {
+        for (let j = 0; j < g_gui_params.resolution - 1; j++) {
+            let i_eq = i - g_gui_params.resolution / 2;
+            let j_eq = j - g_gui_params.resolution / 2;
             let a = [i_eq, M[i][j], j_eq];
             let b = [i_eq + 1, M[i + 1][j], j_eq];
             let c = [i_eq, M[i][j + 1], j_eq + 1];

@@ -38,16 +38,16 @@ function geometry_upadte(geometry, M) {
 }
 
 function scene_update() {
-    if (g_params.wave) {
+    if (g_gui_params.wave) {
         wave_update();
     }
-    if (g_params.rain) {
+    if (g_gui_params.rain) {
         rain_update();
     }
-    if (g_params.rising) {
+    if (g_gui_params.rising) {
         rising_update();
     }
-    if (g_params.leak) {
+    if (g_gui_params.leak) {
         leak_update();
     }
     water_update(U, V, S);
