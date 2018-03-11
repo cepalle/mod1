@@ -4,6 +4,7 @@ let g_WFG_W;            // Water description
 let g_WFG_G;            // Ground description
 let g_WFG_G_lp = [];    // list of points g_WFG_G description
 
+
 function WFG_txt_to_G_lp(txt) {
     g_WFG_G_lp = txt.split("\n").map(test_split =>
         test_split.split(' ').map(flt_txt =>
@@ -97,6 +98,7 @@ function WFG_W_update() {
 let F;                  // Flot description
 let W_cp;
 
+
 function cal_coef(a) {
     return 1 / (a * a * a);
 }
@@ -132,7 +134,6 @@ function G_lp_to_G() {
         }
     }
 }
-
 
 function wave_update() {
     for (let i = 0; i < g_gui_params.resolution; i++) {

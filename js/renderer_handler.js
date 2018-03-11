@@ -2,6 +2,7 @@
 
 let g_renderer_need_update = true;
 
+
 function render_animate() {
     g_stats.begin();
 
