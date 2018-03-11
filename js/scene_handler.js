@@ -1,3 +1,15 @@
+const light1 = new THREE.DirectionalLight(0xffffff, 1);
+light1.position.set(1, 2, 0);
+
+const material_water = new THREE.MeshLambertMaterial({
+    color: 0x1133dd,
+    side: THREE.DoubleSide,
+});
+const material_sol = new THREE.MeshLambertMaterial({
+    color: 0x33dd11,
+    side: THREE.DoubleSide,
+});
+
 function init_geo(M, geo) {
     const positions = [];
     const normals = [];
@@ -14,18 +26,18 @@ function init_geo(M, geo) {
 function scene_init() {
     init_UVS();
 
-    scene = new THREE.Scene();
-    scene.add(light1);
-    geometry_water = new THREE.BufferGeometry();
-    geometry_sol = new THREE.BufferGeometry();
+    g_scene = new THREE.Scene();
+    g_scene.add(light1);
+    g_geometry_water = new THREE.BufferGeometry();
+    g_geometry_sol = new THREE.BufferGeometry();
 
-    init_geo(g_W, geometry_water);
-    const mesh_water = new THREE.Mesh(geometry_water, material_water);
-    scene.add(mesh_water);
+    init_geo(g_W, g_geometry_water);
+    const mesh_water = new THREE.Mesh(g_geometry_water, material_water);
+    g_scene.add(mesh_water);
 
-    init_geo(g_G, geometry_sol);
-    const mesh_sol = new THREE.Mesh(geometry_sol, material_sol);
-    scene.add(mesh_sol);
+    init_geo(g_G, g_geometry_sol);
+    const mesh_sol = new THREE.Mesh(g_geometry_sol, material_sol);
+    g_scene.add(mesh_sol);
 }
 
 function geometry_upadte(geometry, M) {
@@ -50,6 +62,6 @@ function scene_update() {
     if (g_gui_params.leak) {
         leak_update();
     }
-    water_update(g_W, g_F, g_G);
-    geometry_upadte(geometry_water, g_W);
+    water_update();
+    geometry_upadte(g_geometry_water, g_W);
 }
