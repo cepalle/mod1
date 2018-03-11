@@ -1,5 +1,5 @@
 function set_S(txt) {
-    S_lp = txt.split("\n").map(test_split =>
+    g_G_lp = txt.split("\n").map(test_split =>
         test_split.split(' ').map(flt_txt =>
             parseFloat(flt_txt)
         ).map(flt => {
@@ -33,10 +33,10 @@ function init_S() {
             deno += cal_coef(g_gui_params.resolution - i);
             deno += cal_coef(j);
             deno += cal_coef(g_gui_params.resolution - j);
-            for (let k = 0; k < S_lp.length; k++) {
-                let S_lpkx = S_lp[k][0] * g_gui_params.resolution;
-                let S_lpky = S_lp[k][1] * g_gui_params.resolution;
-                let S_lpkz = S_lp[k][2] * g_gui_params.resolution;
+            for (let k = 0; k < g_G_lp.length; k++) {
+                let S_lpkx = g_G_lp[k][0] * g_gui_params.resolution;
+                let S_lpky = g_G_lp[k][1] * g_gui_params.resolution;
+                let S_lpkz = g_G_lp[k][2] * g_gui_params.resolution;
                 let dx = i - S_lpkx;
                 let dz = j - S_lpkz;
                 let dist = Math.sqrt(dx * dx + dz * dz);
@@ -50,36 +50,36 @@ function init_S() {
                 score += S_lpky * a;
             }
             if (deno > 0) {
-                S[i][j] = score / deno;
+                g_G[i][j] = score / deno;
             }
         }
     }
 }
 
 function init_UVS() {
-    while (U.length) {
-        U.pop();
+    while (g_W.length) {
+        g_W.pop();
     }
-    while (U_cp.length) {
-        U_cp.pop();
+    while (g_W_cp.length) {
+        g_W_cp.pop();
     }
-    while (V.length) {
-        V.pop();
+    while (g_F.length) {
+        g_F.pop();
     }
-    while (S.length) {
-        S.pop();
+    while (g_G.length) {
+        g_G.pop();
     }
 
     for (i = 0; i < g_gui_params.resolution; i++) {
-        U.push([]);
-        U_cp.push([]);
-        V.push([]);
-        S.push([]);
+        g_W.push([]);
+        g_W_cp.push([]);
+        g_F.push([]);
+        g_G.push([]);
         for (j = 0; j < g_gui_params.resolution; j++) {
-            U[i][j] = -1;
-            U_cp[i][j] = -1;
-            V[i][j] = 0;
-            S[i][j] = 0;
+            g_W[i][j] = -1;
+            g_W_cp[i][j] = -1;
+            g_F[i][j] = 0;
+            g_G[i][j] = 0;
         }
     }
     init_S();

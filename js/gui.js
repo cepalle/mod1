@@ -1,17 +1,14 @@
-// Gui variable
-let g_need_update = true;
-
 // Gui g_gui_params
 const g_gui_params = {
     resolution: 128,
     ground_1: function () {
-        S_lp = [
+        g_G_lp = [
             [0.5, 0.3, 0.5],
         ];
         g_need_update = true;
     },
     ground_2: function () {
-        S_lp = [
+        g_G_lp = [
             [0.5, 0.3, 0.5],
             [0.75, 0.005, 0.5],
             [0.75, 0.20, 0.75],
@@ -19,7 +16,7 @@ const g_gui_params = {
         g_need_update = true;
     },
     ground_3: function () {
-        S_lp = [
+        g_G_lp = [
             [0.2, 0.1, 0.2],
             [0.4, 0.0, 0.2],
             [0.6, 0.1, 0.2],
@@ -36,7 +33,7 @@ const g_gui_params = {
         g_need_update = true;
     },
     ground_4: function () {
-        S_lp = [
+        g_G_lp = [
             [0.50, 0.1, 0.50],
             [0.25, 0.25, 0.25],
             [0.25, 0.25, 0.75],
@@ -46,7 +43,7 @@ const g_gui_params = {
         g_need_update = true;
     },
     ground_5: function () {
-        S_lp = [
+        g_G_lp = [
             [0.25, 0.2, 0.25],
             [0.25, 0.1, 0.37],
             [0.25, 0.1, 0.50],
@@ -72,7 +69,7 @@ const g_gui_params = {
         g_need_update = true;
     },
     ground_6: function () {
-        S_lp = [
+        g_G_lp = [
             [0.25, 0.25, 0.25],
             [0.25, 0.25, 0.75],
             [0.75, 0.20, 0.75],

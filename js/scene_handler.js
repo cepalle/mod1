@@ -19,11 +19,11 @@ function scene_init() {
     geometry_water = new THREE.BufferGeometry();
     geometry_sol = new THREE.BufferGeometry();
 
-    init_geo(U, geometry_water);
+    init_geo(g_W, geometry_water);
     const mesh_water = new THREE.Mesh(geometry_water, material_water);
     scene.add(mesh_water);
 
-    init_geo(S, geometry_sol);
+    init_geo(g_G, geometry_sol);
     const mesh_sol = new THREE.Mesh(geometry_sol, material_sol);
     scene.add(mesh_sol);
 }
@@ -50,6 +50,6 @@ function scene_update() {
     if (g_gui_params.leak) {
         leak_update();
     }
-    water_update(U, V, S);
-    geometry_upadte(geometry_water, U);
+    water_update(g_W, g_F, g_G);
+    geometry_upadte(geometry_water, g_W);
 }

@@ -44,10 +44,14 @@ let geometry_water;
 let geometry_sol;
 
 // UVS matrices for Height field Fluids
-const U = [];
-const U_cp = [];
-const V = [];
-const S = [];
+const g_W = [];
+const g_W_cp = [];
+const g_F = [];
+const g_G = [];
 
-// S ground description
-let S_lp = [];
+// g_G ground description
+let g_G_lp = [];
+
+// Gui variable
+let g_need_update = true;
+
