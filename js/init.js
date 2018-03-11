@@ -17,10 +17,11 @@ document.body.appendChild(renderer.domElement);
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / (window.innerHeight * wdim), 1, 2000);
 
 function onWindowResize() {
-  camera.aspect = window.innerWidth / (window.innerHeight * wdim);
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight * wdim);
+    camera.aspect = window.innerWidth / (window.innerHeight * wdim);
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight * wdim);
 }
+
 window.addEventListener('resize', onWindowResize, false);
 
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -30,12 +31,12 @@ const light1 = new THREE.DirectionalLight(0xffffff, 1);
 light1.position.set(1, 2, 0);
 
 const material_water = new THREE.MeshLambertMaterial({
-  color: 0x1133dd,
-  side: THREE.DoubleSide,
+    color: 0x1133dd,
+    side: THREE.DoubleSide,
 });
 const material_sol = new THREE.MeshLambertMaterial({
-  color: 0x33dd11,
-  side: THREE.DoubleSide,
+    color: 0x33dd11,
+    side: THREE.DoubleSide,
 });
 
 let scene;
