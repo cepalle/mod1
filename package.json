@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "client-dev": "webpack-dev-server --mode development --open",
-    "build": "webpack ./src/client/index.js ",
+    "build": "webpack ./src/index.js ",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
