@@ -1,25 +1,25 @@
-let g_gui_params;
+import dat from 'dat.gui';
+import {renderer_need_update} from "./renderer_handler";
+import {WFG_G_lp} from "./WFG_handler";
 
-// --- //
-
-g_gui_params = {
+const gui_params = {
     resolution: 192,
     ground_1: function () {
-        g_WFG_G_lp = [
+        WFG_G_lp = [
             [0.5, 0.3, 0.5],
         ];
-        g_renderer_need_update = true;
+        renderer_need_update = true;
     },
     ground_2: function () {
-        g_WFG_G_lp = [
+        WFG_G_lp = [
             [0.5, 0.3, 0.5],
             [0.75, 0.005, 0.5],
             [0.75, 0.20, 0.75],
         ];
-        g_renderer_need_update = true;
+        renderer_need_update = true;
     },
     ground_3: function () {
-        g_WFG_G_lp = [
+        WFG_G_lp = [
             [0.2, 0.1, 0.2],
             [0.4, 0.0, 0.2],
             [0.6, 0.1, 0.2],
@@ -33,20 +33,20 @@ g_gui_params = {
             [0.6, 0.1, 0.6],
             [0.8, 0.01, 0.6],
         ];
-        g_renderer_need_update = true;
+        renderer_need_update = true;
     },
     ground_4: function () {
-        g_WFG_G_lp = [
+        WFG_G_lp = [
             [0.50, 0.1, 0.50],
             [0.25, 0.25, 0.25],
             [0.25, 0.25, 0.75],
             [0.75, 0.25, 0.25],
             [0.75, 0.25, 0.75],
         ];
-        g_renderer_need_update = true;
+        renderer_need_update = true;
     },
     ground_5: function () {
-        g_WFG_G_lp = [
+        WFG_G_lp = [
             [0.25, 0.2, 0.25],
             [0.25, 0.1, 0.37],
             [0.25, 0.1, 0.50],
@@ -69,10 +69,10 @@ g_gui_params = {
             [0.75, 0.2, 0.75],
             [0.50, 0.0, 0.50],
         ];
-        g_renderer_need_update = true;
+        renderer_need_update = true;
     },
     ground_6: function () {
-        g_WFG_G_lp = [
+        WFG_G_lp = [
             [0.25, 0.25, 0.25],
             [0.25, 0.25, 0.75],
             [0.75, 0.20, 0.75],
@@ -99,7 +99,7 @@ g_gui_params = {
             [0.75, 0.225, 0.63],
             [0.50, 0.25, 0.25],
         ];
-        g_renderer_need_update = true;
+        renderer_need_update = true;
     },
     wave: false,
     wave_height: 0.1,
@@ -110,43 +110,45 @@ g_gui_params = {
     leak: false,
     leak_speed: 0.1,
     restart: function () {
-        g_renderer_need_update = true;
+        renderer_need_update = true;
     }
 };
 
 const gui = new dat.GUI();
 
-gui.add(g_gui_params, 'resolution').min(128).max(256).step(16).onFinishChange(function () {
-    g_renderer_need_update = true;
+gui.add(gui_params, 'resolution').min(128).max(256).step(16).onFinishChange(function () {
+    renderer_need_update = true;
 });
 
 const ground_panel = gui.addFolder('Ground');
-ground_panel.add(g_gui_params, 'ground_1');
-ground_panel.add(g_gui_params, 'ground_2');
-ground_panel.add(g_gui_params, 'ground_3');
-ground_panel.add(g_gui_params, 'ground_4');
-ground_panel.add(g_gui_params, 'ground_5');
-ground_panel.add(g_gui_params, 'ground_6');
+ground_panel.add(gui_params, 'ground_1');
+ground_panel.add(gui_params, 'ground_2');
+ground_panel.add(gui_params, 'ground_3');
+ground_panel.add(gui_params, 'ground_4');
+ground_panel.add(gui_params, 'ground_5');
+ground_panel.add(gui_params, 'ground_6');
 ground_panel.open();
 
 const wave_panel = gui.addFolder('Wave');
-wave_panel.add(g_gui_params, 'wave_height').min(0).max(0.5).step(0.02);
-wave_panel.add(g_gui_params, 'wave')
+wave_panel.add(gui_params, 'wave_height').min(0).max(0.5).step(0.02);
+wave_panel.add(gui_params, 'wave');
 wave_panel.open();
 
 const rain_panel = gui.addFolder('Rain');
-rain_panel.add(g_gui_params, 'rain_speed').min(0.01).max(0.1).step(0.01)
-rain_panel.add(g_gui_params, 'rain')
+rain_panel.add(gui_params, 'rain_speed').min(0.01).max(0.1).step(0.01);
+rain_panel.add(gui_params, 'rain');
 rain_panel.open();
 
 const rising_panel = gui.addFolder('Rising');
-rising_panel.add(g_gui_params, 'rising_speed').min(0.02).max(0.2).step(0.02)
-rising_panel.add(g_gui_params, 'rising')
+rising_panel.add(gui_params, 'rising_speed').min(0.02).max(0.2).step(0.02);
+rising_panel.add(gui_params, 'rising');
 rising_panel.open();
 
 const leak_panel = gui.addFolder('Leak');
-leak_panel.add(g_gui_params, 'leak_speed').min(0.02).max(0.2).step(0.02)
-leak_panel.add(g_gui_params, 'leak')
+leak_panel.add(gui_params, 'leak_speed').min(0.02).max(0.2).step(0.02);
+leak_panel.add(gui_params, 'leak');
 leak_panel.open();
 
-gui.add(g_gui_params, 'restart');
+gui.add(gui_params, 'restart');
+
+export {gui_params};

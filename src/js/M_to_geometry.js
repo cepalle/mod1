@@ -1,26 +1,5 @@
-function M_to_geometry_init(M, geo) {
-    const positions = [];
-    const normals = [];
-
-    M_to_positions_normals(positions, normals, M);
-
-    const positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
-    const normalAttribute = new THREE.Int16BufferAttribute(normals, 3);
-    normalAttribute.normalized = true;
-    geo.addAttribute('position', positionAttribute);
-    geo.addAttribute('normal', normalAttribute);
-}
-
-function M_to_geometry(geometry, M) {
-    const positions = geometry.attributes.position.array;
-    const normals = geometry.attributes.normal.array;
-
-    M_to_positions_normals(positions, normals, M);
-    geometry.attributes.position.needsUpdate = true;
-    geometry.attributes.normal.needsUpdate = true;
-}
-
-// --- //
+import {gui_params} from "./gui_handler";
+import * as THREE from 'three';
 
 const pA = new THREE.Vector3();
 const pB = new THREE.Vector3();
@@ -62,10 +41,10 @@ function add_norm(normals, h, lp) {
 function M_to_positions_normals(positions, normals, M) {
     let k = 0;
     let h = 0;
-    for (let i = 0; i < g_gui_params.resolution - 1; i++) {
-        for (let j = 0; j < g_gui_params.resolution - 1; j++) {
-            let i_eq = i - g_gui_params.resolution / 2;
-            let j_eq = j - g_gui_params.resolution / 2;
+    for (let i = 0; i < gui_params.resolution - 1; i++) {
+        for (let j = 0; j < gui_params.resolution - 1; j++) {
+            let i_eq = i - gui_params.resolution / 2;
+            let j_eq = j - gui_params.resolution / 2;
             let a = [i_eq, M[i][j], j_eq];
             let b = [i_eq + 1, M[i + 1][j], j_eq];
             let c = [i_eq, M[i][j + 1], j_eq + 1];
@@ -85,3 +64,27 @@ function M_to_positions_normals(positions, normals, M) {
         }
     }
 }
+
+function M_to_geometry_init(M, geo) {
+    const positions = [];
+    const normals = [];
+
+    M_to_positions_normals(positions, normals, M);
+
+    const positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
+    const normalAttribute = new THREE.Int16BufferAttribute(normals, 3);
+    normalAttribute.normalized = true;
+    geo.addAttribute('position', positionAttribute);
+    geo.addAttribute('normal', normalAttribute);
+}
+
+function M_to_geometry(geometry, M) {
+    const positions = geometry.attributes.position.array;
+    const normals = geometry.attributes.normal.array;
+
+    M_to_positions_normals(positions, normals, M);
+    geometry.attributes.position.needsUpdate = true;
+    geometry.attributes.normal.needsUpdate = true;
+}
+
+export {M_to_geometry_init, M_to_geometry};

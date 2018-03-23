@@ -1,32 +1,14 @@
-let g_renderer_need_update = true;
-
-
-function render_animate() {
-    g_stats.begin();
-
-    requestAnimationFrame(render_animate);
-
-    if (g_renderer_need_update) {
-        camera.position.set(
-            g_gui_params.resolution * 1.5,
-            g_gui_params.resolution * 1.5,
-            g_gui_params.resolution * 1.5
-        );
-        controls.update();
-        scene_init();
-        g_renderer_need_update = false;
-    }
-
-    scene_update();
-    renderer.render(scene, camera);
-    g_stats.end();
-}
-
-// --- //
+import {gui_params} from "./gui_handler";
+import {M_to_geometry, M_to_geometry_init} from "./M_to_geometry";
+import {WFG_G, WFG_init, WFG_W, WFG_W_update} from "./WFG_handler";
+import {stats} from "./stats_handler";
+import * as THREE from 'three';
+const OrbitControls = require('three-orbit-controls')(THREE);
 
 let scene;
 let geometry_water;
 let geometry_sol;
+let renderer_need_update = true;
 
 const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(1, 2, 0);
@@ -57,7 +39,7 @@ function onWindowResize() {
 
 window.addEventListener('resize', onWindowResize, false);
 
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableZoom = true;
 
 
@@ -69,16 +51,39 @@ function scene_init() {
     geometry_water = new THREE.BufferGeometry();
     geometry_sol = new THREE.BufferGeometry();
 
-    M_to_geometry_init(g_WFG_W, geometry_water);
+    M_to_geometry_init(WFG_W, geometry_water);
     const mesh_water = new THREE.Mesh(geometry_water, material_water);
     scene.add(mesh_water);
 
-    M_to_geometry_init(g_WFG_G, geometry_sol);
+    M_to_geometry_init(WFG_G, geometry_sol);
     const mesh_sol = new THREE.Mesh(geometry_sol, material_sol);
     scene.add(mesh_sol);
 }
 
 function scene_update() {
     WFG_W_update();
-    M_to_geometry(geometry_water, g_WFG_W);
+    M_to_geometry(geometry_water, WFG_W);
 }
+
+function render_animate() {
+    stats.begin();
+
+    requestAnimationFrame(render_animate);
+
+    if (renderer_need_update) {
+        camera.position.set(
+            gui_params.resolution * 1.5,
+            gui_params.resolution * 1.5,
+            gui_params.resolution * 1.5
+        );
+        controls.update();
+        scene_init();
+        renderer_need_update = false;
+    }
+
+    scene_update();
+    renderer.render(scene, camera);
+    stats.end();
+}
+
+export {render_animate, renderer_need_update};

@@ -1,3 +1,5 @@
-
 .idea/
-42_mod1.iml
+mod1.iml
+node_modules
+build
+yarn.lock
