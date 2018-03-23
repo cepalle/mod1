@@ -2,15 +2,17 @@ import {renderer_need_update} from "./renderer_handler";
 import {gui_params} from "./gui_handler";
 
 
-let WFG_W;            // Water description
-let WFG_G;            // Ground description
-let WFG_G_lp = [];    // list of points WFG_G description
-let F;                // Flot description
-let W_cp;
-const PI = Math.PI;
+const WFG_W = [];            // Water description
+const WFG_W_cp = [];
+const WFG_G = [];            // Ground description
+const WFG_F = [];                 // Flot description
+const WFG_G_lp = [];         // list of points WFG_G description
 
 function WFG_txt_to_G_lp(txt) {
-    WFG_G_lp = txt.split("\n").map(test_split =>
+    while (WFG_G_lp.length)
+        WFG_G_lp.pop();
+
+    WFG_G_lp.push(...(txt.split("\n").map(test_split =>
         test_split.split(' ').map(flt_txt =>
             parseFloat(flt_txt)
         ).map(flt => {
@@ -22,8 +24,8 @@ function WFG_txt_to_G_lp(txt) {
                 return flt;
             }
         })
-    ).filter(coord => coord.length === 3);
-    renderer_need_update = true;
+    ).filter(coord => coord.length === 3)));
+    renderer_need_update.value = true;
 }
 
 function WFG_textarea_to_G_lp() {
@@ -32,21 +34,25 @@ function WFG_textarea_to_G_lp() {
 }
 
 function WFG_init() {
-    WFG_W = [];
-    WFG_G = [];
-    W_cp = [];
-    F = [];
+    while (WFG_W.length)
+        WFG_W.pop();
+    while (WFG_W_cp.length)
+        WFG_W_cp.pop();
+    while (WFG_G.length)
+        WFG_G.pop();
+    while (WFG_F.length)
+        WFG_F.pop();
 
     for (let i = 0; i < gui_params.resolution; i++) {
         WFG_W.push([]);
         WFG_G.push([]);
-        W_cp.push([]);
-        F.push([]);
+        WFG_W_cp.push([]);
+        WFG_F.push([]);
         for (let j = 0; j < gui_params.resolution; j++) {
             WFG_W[i][j] = -1;
             WFG_G[i][j] = 0;
-            W_cp[i][j] = -1;
-            F[i][j] = 0;
+            WFG_W_cp[i][j] = -1;
+            WFG_F[i][j] = 0;
         }
     }
     G_lp_to_G();
@@ -74,25 +80,25 @@ function WFG_W_update() {
                 dv += cal_dvu(i, j, i + 1, j, WFG_W, WFG_G) / 4;
                 dv += cal_dvu(i, j, i, j - 1, WFG_W, WFG_G) / 4;
                 dv += cal_dvu(i, j, i, j + 1, WFG_W, WFG_G) / 4;
-                F[i][j] = cal_v(F[i][j], dv);
-                W_cp[i][j] = WFG_W[i][j] + F[i][j];
+                WFG_F[i][j] = cal_v(WFG_F[i][j], dv);
+                WFG_W_cp[i][j] = WFG_W[i][j] + WFG_F[i][j];
             } else {
                 dv += cal_dvs(i, j, i - 1, j, WFG_W, WFG_G) / 4;
                 dv += cal_dvs(i, j, i + 1, j, WFG_W, WFG_G) / 4;
                 dv += cal_dvs(i, j, i, j - 1, WFG_W, WFG_G) / 4;
                 dv += cal_dvs(i, j, i, j + 1, WFG_W, WFG_G) / 4;
-                F[i][j] = cal_v(F[i][j], dv);
-                if (F[i][j] > 0.01) {
-                    W_cp[i][j] = WFG_G[i][j] + F[i][j];
+                WFG_F[i][j] = cal_v(WFG_F[i][j], dv);
+                if (WFG_F[i][j] > 0.01) {
+                    WFG_W_cp[i][j] = WFG_G[i][j] + WFG_F[i][j];
                 } else {
-                    W_cp[i][j] = -1;
+                    WFG_W_cp[i][j] = -1;
                 }
             }
         }
     }
     for (let i = 0; i < gui_params.resolution; i++) {
         for (let j = 0; j < gui_params.resolution; j++) {
-            WFG_W[i][j] = W_cp[i][j];
+            WFG_W[i][j] = WFG_W_cp[i][j];
         }
     }
 }
@@ -137,7 +143,7 @@ function G_lp_to_G() {
 function wave_update() {
     for (let i = 0; i < gui_params.resolution; i++) {
         WFG_W[i][gui_params.resolution - 1] = gui_params.wave_height * gui_params.resolution;
-        F[i][gui_params.resolution - 1] = 0;
+        WFG_F[i][gui_params.resolution - 1] = 0;
     }
 }
 

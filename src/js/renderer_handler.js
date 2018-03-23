@@ -8,7 +8,7 @@ const OrbitControls = require('three-orbit-controls')(THREE);
 let scene;
 let geometry_water;
 let geometry_sol;
-let renderer_need_update = true;
+const renderer_need_update = {value: true};
 
 const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(1, 2, 0);
@@ -27,7 +27,8 @@ const wh_dim = 0.9;
 const renderer = new THREE.WebGLRenderer();
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight * wh_dim);
-document.body.appendChild(renderer.domElement);
+
+document.getElementById("iframe").appendChild(renderer.domElement);
 
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / (window.innerHeight * wh_dim), 1, 2000);
 
@@ -70,7 +71,7 @@ function render_animate() {
 
     requestAnimationFrame(render_animate);
 
-    if (renderer_need_update) {
+    if (renderer_need_update.value) {
         camera.position.set(
             gui_params.resolution * 1.5,
             gui_params.resolution * 1.5,
@@ -78,7 +79,7 @@ function render_animate() {
         );
         controls.update();
         scene_init();
-        renderer_need_update = false;
+        renderer_need_update.value = false;
     }
 
     scene_update();

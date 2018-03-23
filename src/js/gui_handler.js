@@ -5,21 +5,27 @@ import {WFG_G_lp} from "./WFG_handler";
 const gui_params = {
     resolution: 192,
     ground_1: function () {
-        WFG_G_lp = [
+        while (WFG_G_lp.length)
+            WFG_G_lp.pop();
+        WFG_G_lp.push(
             [0.5, 0.3, 0.5],
-        ];
-        renderer_need_update = true;
+        );
+        renderer_need_update.value = true;
     },
     ground_2: function () {
-        WFG_G_lp = [
+        while (WFG_G_lp.length)
+            WFG_G_lp.pop();
+        WFG_G_lp.push(
             [0.5, 0.3, 0.5],
             [0.75, 0.005, 0.5],
             [0.75, 0.20, 0.75],
-        ];
-        renderer_need_update = true;
+        );
+        renderer_need_update.value = true;
     },
     ground_3: function () {
-        WFG_G_lp = [
+        while (WFG_G_lp.length)
+            WFG_G_lp.pop();
+        WFG_G_lp.push(
             [0.2, 0.1, 0.2],
             [0.4, 0.0, 0.2],
             [0.6, 0.1, 0.2],
@@ -32,21 +38,25 @@ const gui_params = {
             [0.4, 0.0, 0.6],
             [0.6, 0.1, 0.6],
             [0.8, 0.01, 0.6],
-        ];
-        renderer_need_update = true;
+        );
+        renderer_need_update.value = true;
     },
     ground_4: function () {
-        WFG_G_lp = [
+        while (WFG_G_lp.length)
+            WFG_G_lp.pop();
+        WFG_G_lp.push(
             [0.50, 0.1, 0.50],
             [0.25, 0.25, 0.25],
             [0.25, 0.25, 0.75],
             [0.75, 0.25, 0.25],
             [0.75, 0.25, 0.75],
-        ];
-        renderer_need_update = true;
+        );
+        renderer_need_update.value = true;
     },
     ground_5: function () {
-        WFG_G_lp = [
+        while (WFG_G_lp.length)
+            WFG_G_lp.pop();
+        WFG_G_lp.push(
             [0.25, 0.2, 0.25],
             [0.25, 0.1, 0.37],
             [0.25, 0.1, 0.50],
@@ -68,11 +78,13 @@ const gui_params = {
             [0.75, 0.2, 0.62],
             [0.75, 0.2, 0.75],
             [0.50, 0.0, 0.50],
-        ];
-        renderer_need_update = true;
+        );
+        renderer_need_update.value = true;
     },
     ground_6: function () {
-        WFG_G_lp = [
+        while (WFG_G_lp.length)
+            WFG_G_lp.pop();
+        WFG_G_lp.push(
             [0.25, 0.25, 0.25],
             [0.25, 0.25, 0.75],
             [0.75, 0.20, 0.75],
@@ -98,8 +110,8 @@ const gui_params = {
             [0.25, 0.25, 0.63],
             [0.75, 0.225, 0.63],
             [0.50, 0.25, 0.25],
-        ];
-        renderer_need_update = true;
+        );
+        renderer_need_update.value = true;
     },
     wave: false,
     wave_height: 0.1,
@@ -110,14 +122,14 @@ const gui_params = {
     leak: false,
     leak_speed: 0.1,
     restart: function () {
-        renderer_need_update = true;
+        renderer_need_update.value = true;
     }
 };
 
 const gui = new dat.GUI();
 
 gui.add(gui_params, 'resolution').min(128).max(256).step(16).onFinishChange(function () {
-    renderer_need_update = true;
+    renderer_need_update.value = true;
 });
 
 const ground_panel = gui.addFolder('Ground');
