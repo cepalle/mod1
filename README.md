@@ -8,8 +8,8 @@ This project is a animation of water flow on a surface, it use Height field Flui
 
 ### Rising
 
-![rising_img](https://github.com/cepalle/red-tetris/blob/master/assets/rising.png)
+![rising_img](https://github.com/cepalle/mod1/blob/master/assets/rising.png)
 
 ### Rain
 
-![rain_img](https://github.com/cepalle/red-tetris/blob/master/assets/rain.png)
+![rain_img](https://github.com/cepalle/mod1/blob/master/assets/rain.png)
