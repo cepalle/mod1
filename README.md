@@ -1,6 +1,15 @@
-# mod1
-Three.js App: https://cepalle.github.io/mod1/
+## Overview
 
-This project is a simulator of water flow on a surface.
+Try it at: https://cepalle.github.io/mod1/
 
-Use Height field Fluids approache for the water and KNN approache for the surface.
+This project is a animation of water flow on a surface, it use Height field Fluids algorithm for the water and KNN algorithm for the ground surface.
+
+## Images
+
+### Rising
+
+![rising_img](https://github.com/cepalle/red-tetris/blob/master/assets/rising.png)
+
+### Rain
+
+![rain_img](https://github.com/cepalle/red-tetris/blob/master/assets/rain.png)

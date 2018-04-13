@@ -3,7 +3,7 @@ import {renderer_need_update} from "./renderer_handler";
 import {WFG_G_lp} from "./WFG_handler";
 
 const gui_params = {
-    resolution: 128,
+    resolution: 64,
     ground_1: function () {
         while (WFG_G_lp.length)
             WFG_G_lp.pop();
@@ -128,7 +128,7 @@ const gui_params = {
 
 const gui = new dat.GUI();
 
-gui.add(gui_params, 'resolution').min(128).max(256).step(16).onFinishChange(function () {
+gui.add(gui_params, 'resolution').min(64).max(256).step(16).onFinishChange(function () {
     renderer_need_update.value = true;
 });
 
