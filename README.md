@@ -4,7 +4,7 @@
 
 Try it at: https://cepalle.github.io/mod1/
 
-Mod1 a animation of water flow on a surface.
+Mod1 is a animation of water flow on a surface.
 
 It use Height field Fluids algorithm for the water and KNN algorithm for the ground surface.
 
