@@ -3,7 +3,6 @@ import {gui_params} from "./gui_handler";
 
 
 const WFG_W = [];            // Water description
-const WFG_W_cp = [];
 const WFG_G = [];            // Ground description
 const WFG_F = [];                 // Flot description
 const WFG_G_lp = [];         // list of points WFG_G description
@@ -36,8 +35,6 @@ function WFG_textarea_to_G_lp() {
 function WFG_init() {
     while (WFG_W.length)
         WFG_W.pop();
-    while (WFG_W_cp.length)
-        WFG_W_cp.pop();
     while (WFG_G.length)
         WFG_G.pop();
     while (WFG_F.length)
@@ -46,12 +43,10 @@ function WFG_init() {
     for (let i = 0; i < gui_params.resolution; i++) {
         WFG_W.push([]);
         WFG_G.push([]);
-        WFG_W_cp.push([]);
         WFG_F.push([]);
         for (let j = 0; j < gui_params.resolution; j++) {
-            WFG_W[i][j] = -1;
+            WFG_W[i][j] = -0.001;
             WFG_G[i][j] = 0;
-            WFG_W_cp[i][j] = -1;
             WFG_F[i][j] = 0;
         }
     }
@@ -74,35 +69,34 @@ function WFG_W_update() {
 
     for (let i = 0; i < gui_params.resolution; i++) {
         for (let j = 0; j < gui_params.resolution; j++) {
-            let dv = 0;
-            if (WFG_W[i][j] > WFG_G[i][j]) {
-                dv += cal_dvu(i, j, i - 1, j, WFG_W, WFG_G) / 4;
-                dv += cal_dvu(i, j, i + 1, j, WFG_W, WFG_G) / 4;
-                dv += cal_dvu(i, j, i, j - 1, WFG_W, WFG_G) / 4;
-                dv += cal_dvu(i, j, i, j + 1, WFG_W, WFG_G) / 4;
-                WFG_F[i][j] = cal_v(WFG_F[i][j], dv);
-                WFG_W_cp[i][j] = WFG_W[i][j] + WFG_F[i][j];
-            } else {
-                dv += cal_dvs(i, j, i - 1, j, WFG_W, WFG_G) / 4;
-                dv += cal_dvs(i, j, i + 1, j, WFG_W, WFG_G) / 4;
-                dv += cal_dvs(i, j, i, j - 1, WFG_W, WFG_G) / 4;
-                dv += cal_dvs(i, j, i, j + 1, WFG_W, WFG_G) / 4;
-                WFG_F[i][j] = cal_v(WFG_F[i][j], dv);
-                if (WFG_F[i][j] > 0.01) {
-                    WFG_W_cp[i][j] = WFG_G[i][j] + WFG_F[i][j];
-                } else {
-                    WFG_W_cp[i][j] = -1;
-                }
-            }
+            cal_dvw(i, j, i - 1, j);
+            cal_dvw(i, j, i + 1, j);
+            cal_dvw(i, j, i, j - 1);
+            cal_dvw(i, j, i, j + 1);
         }
     }
     for (let i = 0; i < gui_params.resolution; i++) {
         for (let j = 0; j < gui_params.resolution; j++) {
-            WFG_W[i][j] = WFG_W_cp[i][j];
+            WFG_F[i][j] *= 0.99;
+            if (WFG_G[i][j] > WFG_W[i][j] && WFG_F[i][j] > 0.001) {
+                WFG_W[i][j] = WFG_G[i][j];
+            }
+            WFG_W[i][j] += WFG_F[i][j];
+        }
+    }
+    W_ground_update();
+}
+
+function W_ground_update() {
+    for (let i = 0; i < gui_params.resolution; i++) {
+        for (let j = 0; j < gui_params.resolution; j++) {
+            if (WFG_W[i][j] < WFG_G[i][j]) {
+                WFG_W[i][j] = -1;
+                WFG_F[i][j] = 0;
+            }
         }
     }
 }
-
 
 function cal_coef(a) {
     return 1 / (a * a * a);
@@ -165,9 +159,9 @@ function rising_update() {
     for (let i = 0; i < gui_params.resolution; i++) {
         for (let j = 0; j < gui_params.resolution; j++) {
             if (i === 0 || j === 0 ||
-                    i === gui_params.resolution - 1 || j === gui_params.resolution - 1) {
+                i === gui_params.resolution - 1 || j === gui_params.resolution - 1) {
                 if (WFG_W[i][j] < WFG_G[i][j]) {
-                  WFG_W[i][j] = WFG_G[i][j]
+                    WFG_W[i][j] = WFG_G[i][j]
                 }
                 WFG_W[i][j] += gui_params.rising_speed;
                 WFG_F[i][j] = 0;
@@ -181,44 +175,23 @@ function leak_update() {
         for (let j = 0; j < gui_params.resolution; j++) {
             if (WFG_W[i][j] > WFG_G[i][j]) {
                 WFG_W[i][j] -= gui_params.leak_speed;
-                WFG_W[i][j] = (WFG_W[i][j] > WFG_G[i][j] ? WFG_W[i][j] : -1);
             }
         }
     }
+    W_ground_update();
 }
 
-function cal_dvu(i, j, ii, jj) {
-    if (ii < 0 || ii >= gui_params.resolution || jj < 0 || jj >= gui_params.resolution) {
-        return 0;
+function cal_dvw(i, j, ii, jj) {
+    let df;
+    if (ii < 0 || ii >= gui_params.resolution || jj < 0 || jj >= gui_params.resolution ||
+        WFG_G[i][j] > WFG_W[i][j] ||
+        WFG_G[ii][jj] > WFG_W[i][j] ||
+        WFG_W[ii][jj] > WFG_W[i][j]) {
+        return;
     }
-    if (WFG_G[ii][jj] > WFG_W[ii][jj]) {
-        if (WFG_G[ii][jj] > WFG_W[i][j]) {
-            return 0;
-        }
-        return WFG_G[ii][jj] - WFG_W[i][j];
-    }
-    let dv1 = WFG_W[ii][jj] - WFG_W[i][j];
-    let dv2 = WFG_W[ii][jj] - WFG_G[ii][jj];
-    return (dv1 > dv2 ? dv2 : dv1);
-}
-
-function cal_dvs(i, j, ii, jj) {
-    if (ii < 0 || ii >= gui_params.resolution || jj < 0 || jj >= gui_params.resolution) {
-        return 0;
-    }
-    if (WFG_G[ii][jj] > WFG_W[ii][jj]) {
-        return 0;
-    }
-    if (WFG_W[ii][jj] > WFG_G[i][j]) {
-        return WFG_W[ii][jj] - WFG_G[i][j];
-    }
-    return 0;
-}
-
-function cal_v(v_old, dv) {
-    v_old += dv;
-    v_old *= 0.99;
-    return v_old;
+    df = WFG_W[i][j] - Math.max(WFG_G[i][j], WFG_G[ii][jj], WFG_W[ii][jj]);
+    WFG_F[ii][jj] += (df / 4);
+    WFG_F[i][j] -= (df / 4);
 }
 
 export {WFG_W, WFG_G, WFG_G_lp, WFG_txt_to_G_lp, WFG_textarea_to_G_lp, WFG_init, WFG_W_update};

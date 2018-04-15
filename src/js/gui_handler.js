@@ -152,12 +152,12 @@ rain_panel.add(gui_params, 'rain');
 rain_panel.open();
 
 const rising_panel = gui.addFolder('Rising');
-rising_panel.add(gui_params, 'rising_speed').min(0.02).max(0.2).step(0.02);
+rising_panel.add(gui_params, 'rising_speed').min(0.02).max(0.5).step(0.02);
 rising_panel.add(gui_params, 'rising');
 rising_panel.open();
 
 const leak_panel = gui.addFolder('Leak');
-leak_panel.add(gui_params, 'leak_speed').min(0.02).max(0.2).step(0.02);
+leak_panel.add(gui_params, 'leak_speed').min(0.02).max(0.5).step(0.02);
 leak_panel.add(gui_params, 'leak');
 leak_panel.open();
 
