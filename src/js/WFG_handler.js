@@ -4,7 +4,7 @@ import {gui_params} from "./gui_handler";
 
 const WFG_W = [];            // Water description
 const WFG_G = [];            // Ground description
-const WFG_F = [];                 // Flot description
+const WFG_F = [];            // Flot description
 const WFG_G_lp = [];         // list of points WFG_G description
 
 function WFG_init() {
@@ -94,7 +94,7 @@ function W_ground_update() {
         for (let j = 0; j < gui_params.resolution; j++) {
             if (WFG_W[i][j] < WFG_G[i][j]) {
                 WFG_W[i][j] = -1;
-                WFG_F[i][j] = 0;
+                //WFG_F[i][j] = 0;
             }
         }
     }
@@ -141,14 +141,26 @@ function wave_update() {
     }
 }
 
+function cal_dvw(i, j, ii, jj) {
+    let df;
+    if (ii < 0 || ii >= gui_params.resolution || jj < 0 || jj >= gui_params.resolution ||
+        WFG_G[i][j] > WFG_W[i][j] ||
+        WFG_G[ii][jj] > WFG_W[i][j] ||
+        WFG_W[ii][jj] > WFG_W[i][j]) {
+        return;
+    }
+    df = WFG_W[i][j] - Math.max(WFG_G[i][j], WFG_G[ii][jj], WFG_W[ii][jj]);
+    WFG_F[ii][jj] += (df / 4);
+    WFG_F[i][j] -= (df / 4);
+}
+
 function rain_update() {
     for (let i = 0; i < gui_params.resolution; i++) {
         for (let j = 0; j < gui_params.resolution; j++) {
             if (Math.random() < gui_params.rain_speed) {
-                if (WFG_W[i][j] > WFG_G[i][j]) {
+                if (WFG_W[i][j] < WFG_G[i][j]) {
+                    WFG_W[i][j] = WFG_G[i][j];
                     WFG_W[i][j] += 0.1;
-                } else {
-                    WFG_W[i][j] = WFG_G[i][j] + 0.1;
                 }
             }
         }
@@ -179,19 +191,6 @@ function leak_update() {
         }
     }
     W_ground_update();
-}
-
-function cal_dvw(i, j, ii, jj) {
-    let df;
-    if (ii < 0 || ii >= gui_params.resolution || jj < 0 || jj >= gui_params.resolution ||
-        WFG_G[i][j] > WFG_W[i][j] ||
-        WFG_G[ii][jj] > WFG_W[i][j] ||
-        WFG_W[ii][jj] > WFG_W[i][j]) {
-        return;
-    }
-    df = WFG_W[i][j] - Math.max(WFG_G[i][j], WFG_G[ii][jj], WFG_W[ii][jj]);
-    WFG_F[ii][jj] += (df / 4);
-    WFG_F[i][j] -= (df / 4);
 }
 
 export {WFG_W, WFG_G, WFG_G_lp, WFG_txt_to_G_lp, WFG_textarea_to_G_lp, WFG_init, WFG_W_update};
