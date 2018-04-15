@@ -4,7 +4,9 @@
 
 Try it at: https://cepalle.github.io/mod1/
 
-This project is a animation of water flow on a surface, it use Height field Fluids algorithm for the water and KNN algorithm for the ground surface.
+Mod1 a animation of water flow on a surface.
+
+It use Height field Fluids algorithm for the water and KNN algorithm for the ground surface.
 
 ## Images
 
