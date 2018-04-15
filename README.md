@@ -1,6 +1,6 @@
 ## Overview
 
-**/!\ Use Firefox for better performance /!\**
+**/!\\ Use Firefox for better performance /!\\**
 
 Try it at: https://cepalle.github.io/mod1/
 
