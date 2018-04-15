@@ -7,6 +7,27 @@ const WFG_G = [];            // Ground description
 const WFG_F = [];                 // Flot description
 const WFG_G_lp = [];         // list of points WFG_G description
 
+function WFG_init() {
+    while (WFG_W.length)
+        WFG_W.pop();
+    while (WFG_G.length)
+        WFG_G.pop();
+    while (WFG_F.length)
+        WFG_F.pop();
+
+    for (let i = 0; i < gui_params.resolution; i++) {
+        WFG_W.push([]);
+        WFG_G.push([]);
+        WFG_F.push([]);
+        for (let j = 0; j < gui_params.resolution; j++) {
+            WFG_W[i][j] = -0.001;
+            WFG_G[i][j] = 0;
+            WFG_F[i][j] = 0;
+        }
+    }
+    G_lp_to_G();
+}
+
 function WFG_txt_to_G_lp(txt) {
     while (WFG_G_lp.length)
         WFG_G_lp.pop();
@@ -30,72 +51,6 @@ function WFG_txt_to_G_lp(txt) {
 function WFG_textarea_to_G_lp() {
     let text = document.getElementById("input_G_lp").value;
     WFG_txt_to_G_lp(text);
-}
-
-function WFG_init() {
-    while (WFG_W.length)
-        WFG_W.pop();
-    while (WFG_G.length)
-        WFG_G.pop();
-    while (WFG_F.length)
-        WFG_F.pop();
-
-    for (let i = 0; i < gui_params.resolution; i++) {
-        WFG_W.push([]);
-        WFG_G.push([]);
-        WFG_F.push([]);
-        for (let j = 0; j < gui_params.resolution; j++) {
-            WFG_W[i][j] = -0.001;
-            WFG_G[i][j] = 0;
-            WFG_F[i][j] = 0;
-        }
-    }
-    G_lp_to_G();
-}
-
-function WFG_W_update() {
-    if (gui_params.wave) {
-        wave_update();
-    }
-    if (gui_params.rain) {
-        rain_update();
-    }
-    if (gui_params.rising) {
-        rising_update();
-    }
-    if (gui_params.leak) {
-        leak_update();
-    }
-
-    for (let i = 0; i < gui_params.resolution; i++) {
-        for (let j = 0; j < gui_params.resolution; j++) {
-            cal_dvw(i, j, i - 1, j);
-            cal_dvw(i, j, i + 1, j);
-            cal_dvw(i, j, i, j - 1);
-            cal_dvw(i, j, i, j + 1);
-        }
-    }
-    for (let i = 0; i < gui_params.resolution; i++) {
-        for (let j = 0; j < gui_params.resolution; j++) {
-            WFG_F[i][j] *= 0.99;
-            if (WFG_G[i][j] > WFG_W[i][j] && WFG_F[i][j] > 0.001) {
-                WFG_W[i][j] = WFG_G[i][j];
-            }
-            WFG_W[i][j] += WFG_F[i][j];
-        }
-    }
-    W_ground_update();
-}
-
-function W_ground_update() {
-    for (let i = 0; i < gui_params.resolution; i++) {
-        for (let j = 0; j < gui_params.resolution; j++) {
-            if (WFG_W[i][j] < WFG_G[i][j]) {
-                WFG_W[i][j] = -1;
-                WFG_F[i][j] = 0;
-            }
-        }
-    }
 }
 
 function cal_coef(a) {
@@ -132,6 +87,51 @@ function G_lp_to_G() {
             }
         }
     }
+}
+
+function W_ground_update() {
+    for (let i = 0; i < gui_params.resolution; i++) {
+        for (let j = 0; j < gui_params.resolution; j++) {
+            if (WFG_W[i][j] < WFG_G[i][j]) {
+                WFG_W[i][j] = -1;
+                WFG_F[i][j] = 0;
+            }
+        }
+    }
+}
+
+function WFG_W_update() {
+    if (gui_params.wave) {
+        wave_update();
+    }
+    if (gui_params.rain) {
+        rain_update();
+    }
+    if (gui_params.rising) {
+        rising_update();
+    }
+    if (gui_params.leak) {
+        leak_update();
+    }
+
+    for (let i = 0; i < gui_params.resolution; i++) {
+        for (let j = 0; j < gui_params.resolution; j++) {
+            cal_dvw(i, j, i - 1, j);
+            cal_dvw(i, j, i + 1, j);
+            cal_dvw(i, j, i, j - 1);
+            cal_dvw(i, j, i, j + 1);
+        }
+    }
+    for (let i = 0; i < gui_params.resolution; i++) {
+        for (let j = 0; j < gui_params.resolution; j++) {
+            WFG_F[i][j] *= 0.99;
+            if (WFG_G[i][j] > WFG_W[i][j] && WFG_F[i][j] > 0.001) {
+                WFG_W[i][j] = WFG_G[i][j];
+            }
+            WFG_W[i][j] += WFG_F[i][j];
+        }
+    }
+    W_ground_update();
 }
 
 function wave_update() {
