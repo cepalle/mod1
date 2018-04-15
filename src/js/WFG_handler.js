@@ -164,11 +164,13 @@ function rain_update() {
 function rising_update() {
     for (let i = 0; i < gui_params.resolution; i++) {
         for (let j = 0; j < gui_params.resolution; j++) {
-            if (WFG_W[i][j] > WFG_G[i][j]) {
+            if (i === 0 || j === 0 ||
+                    i === gui_params.resolution - 1 || j === gui_params.resolution - 1) {
+                if (WFG_W[i][j] < WFG_G[i][j]) {
+                  WFG_W[i][j] = WFG_G[i][j]
+                }
                 WFG_W[i][j] += gui_params.rising_speed;
-            } else if (WFG_G[i][j] < 2 && (i === 0 || j === 0 ||
-                    i === gui_params.resolution - 1 || j === gui_params.resolution - 1)) {
-                WFG_W[i][j] = 2;
+                WFG_F[i][j] = 0;
             }
         }
     }
