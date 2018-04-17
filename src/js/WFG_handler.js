@@ -89,17 +89,6 @@ function G_lp_to_G() {
     }
 }
 
-function W_ground_update() {
-    for (let i = 0; i < gui_params.resolution; i++) {
-        for (let j = 0; j < gui_params.resolution; j++) {
-            if (WFG_W[i][j] < WFG_G[i][j]) {
-                WFG_W[i][j] = -1;
-                //WFG_F[i][j] = 0;
-            }
-        }
-    }
-}
-
 function WFG_W_update() {
     if (gui_params.wave) {
         wave_update();
@@ -129,9 +118,11 @@ function WFG_W_update() {
                 WFG_W[i][j] = WFG_G[i][j];
             }
             WFG_W[i][j] += WFG_F[i][j];
+            if (WFG_W[i][j] < WFG_G[i][j]) {
+                WFG_W[i][j] = -1;
+            }
         }
     }
-    W_ground_update();
 }
 
 function wave_update() {
@@ -187,10 +178,13 @@ function leak_update() {
         for (let j = 0; j < gui_params.resolution; j++) {
             if (WFG_W[i][j] > WFG_G[i][j]) {
                 WFG_W[i][j] -= gui_params.leak_speed;
+                if (WFG_W[i][j] < WFG_G[i][j]) {
+                    WFG_W[i][j] = -1;
+                    WFG_F[i][j] = 0;
+                }
             }
         }
     }
-    W_ground_update();
 }
 
 export {WFG_W, WFG_G, WFG_G_lp, WFG_txt_to_G_lp, WFG_textarea_to_G_lp, WFG_init, WFG_W_update};
