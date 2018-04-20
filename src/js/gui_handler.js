@@ -113,10 +113,10 @@ const gui_params = {
         );
         renderer_need_update.value = true;
     },
-    wave: false,
-    wave_height: 0.1,
+    wave: true,
+    wave_height: 0.08,
     rain: false,
-    rain_speed: 0.05,
+    rain_speed: 0.01,
     rising: false,
     rising_speed: 0.1,
     leak: false,
@@ -147,7 +147,7 @@ wave_panel.add(gui_params, 'wave');
 wave_panel.open();
 
 const rain_panel = gui.addFolder('Rain');
-rain_panel.add(gui_params, 'rain_speed').min(0.01).max(0.1).step(0.01);
+rain_panel.add(gui_params, 'rain_speed').min(0.01).max(0.04).step(0.01);
 rain_panel.add(gui_params, 'rain');
 rain_panel.open();
 

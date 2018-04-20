@@ -5,7 +5,20 @@ import {gui_params} from "./gui_handler";
 const WFG_W = [];            // Water description
 const WFG_G = [];            // Ground description
 const WFG_F = [];            // Flot description
-const WFG_G_lp = [];         // list of points WFG_G description
+const WFG_G_lp = [
+    [0.2, 0.1, 0.2],
+    [0.4, 0.0, 0.2],
+    [0.6, 0.1, 0.2],
+    [0.8, 0.01, 0.2],
+    [0.2, 0.025, 0.4],
+    [0.4, 0.1, 0.4],
+    [0.6, 0.01, 0.4],
+    [0.8, 0.1, 0.4],
+    [0.2, 0.1, 0.6],
+    [0.4, 0.0, 0.6],
+    [0.6, 0.1, 0.6],
+    [0.8, 0.01, 0.6],
+];         // list of points WFG_G description
 
 function WFG_init() {
     while (WFG_W.length)
@@ -127,8 +140,8 @@ function WFG_W_update() {
 
 function wave_update() {
     for (let i = 0; i < gui_params.resolution; i++) {
-        WFG_W[i][gui_params.resolution - 1] = gui_params.wave_height * gui_params.resolution;
-        WFG_F[i][gui_params.resolution - 1] = 0;
+        WFG_W[0][i] = gui_params.wave_height * gui_params.resolution;
+        WFG_F[0][i] = 0;
     }
 }
 
