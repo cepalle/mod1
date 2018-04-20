@@ -30,7 +30,7 @@ renderer.setSize(window.innerWidth, window.innerHeight * wh_dim);
 
 document.getElementById("iframe").appendChild(renderer.domElement);
 
-const camera = new THREE.PerspectiveCamera(45, window.innerWidth / (window.innerHeight * wh_dim), 1, 2000);
+const camera = new THREE.PerspectiveCamera(30, window.innerWidth / (window.innerHeight * wh_dim), 1, 2000);
 
 function onWindowResize() {
     camera.aspect = window.innerWidth / (window.innerHeight * wh_dim);
