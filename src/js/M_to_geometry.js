@@ -1,5 +1,6 @@
 import {gui_params} from "./gui_handler";
 import * as THREE from 'three';
+import {WFG_W} from "./WFG_handler";
 
 const pA = new THREE.Vector3();
 const pB = new THREE.Vector3();
@@ -87,4 +88,95 @@ function M_to_geometry(geometry, M) {
     geometry.attributes.normal.needsUpdate = true;
 }
 
-export {M_to_geometry_init, M_to_geometry};
+function M_to_border_position_normals(positions, normals, M) {
+    let k = 0;
+    let h = 0;
+    for (let i = 0; i < gui_params.resolution - 1; i++) {
+        let i_eq = i - gui_params.resolution / 2;
+        const start = - gui_params.resolution / 2;
+        const end = gui_params.resolution / 2 - 1;
+
+        let a = [i_eq, M[i][0], start];
+        let b = [i_eq + 1, M[i + 1][0], start];
+        let c = [i_eq, 0, start];
+        let d = [i_eq + 1, 0, start];
+        // positions
+        add_pos(positions, k, [a, d, b]);
+        k += 9;
+        add_pos(positions, k, [a, d, c]);
+        k += 9;
+        // flat face normals
+        add_norm(normals, h, [a, d, b]);
+        h += 9;
+        add_norm(normals, h, [a, d, c]);
+        h += 9;
+
+        a = [start, M[0][i], i_eq];
+        b = [start, M[0][i+1], i_eq + 1];
+        c = [start, 0, i_eq];
+        d = [start, 0, i_eq + 1];
+        // positions
+        add_pos(positions, k, [a, d, b]);
+        k += 9;
+        add_pos(positions, k, [a, d, c]);
+        k += 9;
+        // flat face normals
+        add_norm(normals, h, [a, d, b]);
+        h += 9;
+        add_norm(normals, h, [a, d, c]);
+        h += 9;
+
+        a = [end, M[gui_params.resolution - 1][i], i_eq];
+        b = [end, M[gui_params.resolution - 1][i + 1], i_eq + 1];
+        c = [end, 0, i_eq];
+        d = [end, 0, i_eq + 1];
+        // positions
+        add_pos(positions, k, [a, d, b]);
+        k += 9;
+        add_pos(positions, k, [a, d, c]);
+        k += 9;
+        // flat face normals
+        add_norm(normals, h, [a, d, b]);
+        h += 9;
+        add_norm(normals, h, [a, d, c]);
+        h += 9;
+
+        a = [i_eq, M[i][gui_params.resolution - 1], end];
+        b = [i_eq + 1, M[i + 1][gui_params.resolution - 1], end];
+        c = [i_eq, 0, end];
+        d = [i_eq + 1, 0, end];
+        // positions
+        add_pos(positions, k, [a, d, b]);
+        k += 9;
+        add_pos(positions, k, [a, d, c]);
+        k += 9;
+        // flat face normals
+        add_norm(normals, h, [a, d, b]);
+        h += 9;
+        add_norm(normals, h, [a, d, c]);
+        h += 9;
+    }
+}
+
+function border_water_init(M, geo) {
+    const positions = [];
+    const normals = [];
+
+    M_to_border_position_normals(positions, normals, M);
+    const positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
+    const normalAttribute = new THREE.Int16BufferAttribute(normals, 3);
+    normalAttribute.normalized = true;
+    geo.addAttribute('position', positionAttribute);
+    geo.addAttribute('normal', normalAttribute);
+}
+
+function border_water_update(geometry, M) {
+    const positions = geometry.attributes.position.array;
+    const normals = geometry.attributes.normal.array;
+
+    M_to_border_position_normals(positions, normals, M);
+    geometry.attributes.position.needsUpdate = true;
+    geometry.attributes.normal.needsUpdate = true;
+}
+
+export {M_to_geometry_init, M_to_geometry, border_water_update, border_water_init};

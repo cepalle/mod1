@@ -1,5 +1,5 @@
 import {gui_params} from "./gui_handler";
-import {M_to_geometry, M_to_geometry_init} from "./M_to_geometry";
+import {M_to_geometry, M_to_geometry_init, border_water_update, border_water_init} from "./M_to_geometry";
 import {WFG_G, WFG_init, WFG_W, WFG_W_update} from "./WFG_handler";
 import {stats} from "./stats_handler";
 import * as THREE from 'three';
@@ -8,10 +8,13 @@ const OrbitControls = require('three-orbit-controls')(THREE);
 let scene;
 let geometry_water;
 let geometry_sol;
+let geometry_border_water;
 const renderer_need_update = {value: true};
 
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(1, 2, 0);
+const light = new THREE.DirectionalLight(0xffffff, 0.9);
+light.position.set(1, 2, 1);
+const light2 = new THREE.DirectionalLight(0xffffff, 0.3);
+light2.position.set(-1, 1, -1);
 
 const material_water = new THREE.MeshLambertMaterial({
     color: 0x1133dd,
@@ -49,8 +52,10 @@ function scene_init() {
 
     scene = new THREE.Scene();
     scene.add(light);
+    scene.add(light2);
     geometry_water = new THREE.BufferGeometry();
     geometry_sol = new THREE.BufferGeometry();
+    geometry_border_water = new THREE.BufferGeometry();
 
     M_to_geometry_init(WFG_W, geometry_water);
     const mesh_water = new THREE.Mesh(geometry_water, material_water);
@@ -59,11 +64,16 @@ function scene_init() {
     M_to_geometry_init(WFG_G, geometry_sol);
     const mesh_sol = new THREE.Mesh(geometry_sol, material_sol);
     scene.add(mesh_sol);
+
+    border_water_init(WFG_W, geometry_border_water);
+    const mesh_border = new THREE.Mesh(geometry_border_water, material_water);
+    scene.add(mesh_border);
 }
 
 function scene_update() {
     WFG_W_update();
     M_to_geometry(geometry_water, WFG_W);
+    border_water_update(geometry_border_water, WFG_W);
 }
 
 function render_animate() {
