@@ -126,7 +126,7 @@ function WFG_W_update() {
     }
     for (let i = 0; i < gui_params.resolution; i++) {
         for (let j = 0; j < gui_params.resolution; j++) {
-            WFG_F[i][j] *= 0.99;
+            WFG_F[i][j] *= (1 - 0.02);
             if (WFG_G[i][j] > WFG_W[i][j] && WFG_F[i][j] > 0.001) {
                 WFG_W[i][j] = WFG_G[i][j];
             }
