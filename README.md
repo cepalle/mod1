@@ -8,10 +8,4 @@ It use Height field Fluids algorithm for the water and KNN algorithm for the gro
 
 ## Images
 
-### Rising
-
-![rising_img](https://github.com/cepalle/mod1/blob/master/assets/rising.png)
-
-### Rain
-
 ![rain_img](https://github.com/cepalle/mod1/blob/master/assets/rain.png)
