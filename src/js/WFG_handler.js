@@ -1,4 +1,3 @@
-import {renderer_need_update} from "./renderer_handler";
 import {gui_params} from "./gui_handler";
 
 
@@ -39,31 +38,6 @@ function WFG_init() {
         }
     }
     G_lp_to_G();
-}
-
-function WFG_txt_to_G_lp(txt) {
-    while (WFG_G_lp.length)
-        WFG_G_lp.pop();
-
-    WFG_G_lp.push(...(txt.split("\n").map(test_split =>
-        test_split.split(' ').map(flt_txt =>
-            parseFloat(flt_txt)
-        ).map(flt => {
-            if (flt < 0) {
-                return 0;
-            } else if (flt > 1) {
-                return 1;
-            } else {
-                return flt;
-            }
-        })
-    ).filter(coord => coord.length === 3)));
-    renderer_need_update.value = true;
-}
-
-function WFG_textarea_to_G_lp() {
-    let text = document.getElementById("input_G_lp").value;
-    WFG_txt_to_G_lp(text);
 }
 
 function cal_coef(a) {
@@ -200,4 +174,4 @@ function leak_update() {
     }
 }
 
-export {WFG_W, WFG_G, WFG_G_lp, WFG_txt_to_G_lp, WFG_textarea_to_G_lp, WFG_init, WFG_W_update};
+export {WFG_W, WFG_G, WFG_G_lp, WFG_init, WFG_W_update};

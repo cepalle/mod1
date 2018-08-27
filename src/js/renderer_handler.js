@@ -25,20 +25,18 @@ const material_sol = new THREE.MeshLambertMaterial({
     side: THREE.DoubleSide,
 });
 
-const wh_dim = 0.9;
-
 const renderer = new THREE.WebGLRenderer();
 renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(window.innerWidth, window.innerHeight * wh_dim);
+renderer.setSize(window.innerWidth, window.innerHeight);
 
 document.getElementById("iframe").appendChild(renderer.domElement);
 
-const camera = new THREE.PerspectiveCamera(30, window.innerWidth / (window.innerHeight * wh_dim), 1, 2000);
+const camera = new THREE.PerspectiveCamera(30, window.innerWidth / (window.innerHeight), 1, 2000);
 
 function onWindowResize() {
-    camera.aspect = window.innerWidth / (window.innerHeight * wh_dim);
+    camera.aspect = window.innerWidth / (window.innerHeight);
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight * wh_dim);
+    renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 window.addEventListener('resize', onWindowResize, false);
