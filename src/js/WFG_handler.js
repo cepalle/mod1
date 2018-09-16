@@ -135,11 +135,13 @@ function cal_dvw(i, j, ii, jj) {
 function rain_update() {
     for (let i = 0; i < gui_params.resolution; i++) {
         for (let j = 0; j < gui_params.resolution; j++) {
-            if (Math.random() < gui_params.rain_speed) {
-                if (WFG_W[i][j] < WFG_G[i][j]) {
-                    WFG_W[i][j] = WFG_G[i][j];
-                    WFG_W[i][j] += 0.1;
-                }
+            if (Math.random() < gui_params.rain_speed / 300) {
+                if (WFG_W[i][j] > WFG_G[i][j]) {
+                    WFG_W[i][j] += 3;
+                } /*else {
+                    WFG_W[i][j] = WFG_G[i][j] + 0.1;
+                    WFG_F[i][j] = 0
+                }*/
             }
         }
     }
