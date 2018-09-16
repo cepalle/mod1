@@ -2,7 +2,7 @@
 
 **/!\\ Use Firefox for better performance /!\\**
 
-Mod1 is viewer of animations of water flow, try it at: https://cepalle.github.io/mod1/
+Mod1 is viewer of water flow, try it at: https://cepalle.github.io/mod1/
 
 It use Height field Fluids algorithm for the water and KNN algorithm for the ground surface.
 
