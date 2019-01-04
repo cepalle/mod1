@@ -3,7 +3,7 @@ import {renderer_need_update} from "./renderer_handler";
 import {WFG_G_lp} from "./WFG_handler";
 
 const gui_params = {
-    resolution: 128,
+    resolution: 64,
     ground_1: function () {
         while (WFG_G_lp.length)
             WFG_G_lp.pop();
